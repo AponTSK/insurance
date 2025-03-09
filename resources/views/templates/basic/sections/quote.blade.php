@@ -8,8 +8,8 @@
     <div class="right-bg"></div>
     <div class="container">
         <div class="section-heading style-left">
-            <h2 class="section-heading__title"> {{ @$quoteContent->data_values->heading }} </h2>
-            <p class="section-heading__desc"> {{ @$quoteContent->data_values->subheading }} </p>
+            <h2 class="section-heading__title"> {{ __(@$quoteContent->data_values->heading) }} </h2>
+            <p class="section-heading__desc"> {{ __(@$quoteContent->data_values->subheading) }} </p>
         </div>
         <form action="#" class="area-form">
             <div class="row gy-4 align-items-end">

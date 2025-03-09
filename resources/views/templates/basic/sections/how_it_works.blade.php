@@ -10,10 +10,10 @@
     <div class="container">
         <div class="section-heading">
             <h2 class="section-heading__title" data-highlight="2">
-                {{ @$howItWorkContent->data_values->heading }}
+                {{ __(@$howItWorkContent->data_values->heading) }}
             </h2>
             <p class="section-heading__desc">
-                {{ @$howItWorkContent->data_values->subheading }}
+                {{ __(@$howItWorkContent->data_values->subheading) }}
             </p>
         </div>
         <div class="row gy-4 justify-content-center">

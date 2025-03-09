@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Feature;
 use App\Models\Plan;
 use Illuminate\Http\Request;
 
@@ -11,12 +12,12 @@ class PlanController extends Controller
     public function index()
     {
         $pageTitle = 'Manage Policy Plans';
-
-        $plans = Plan::with('category')->whereHas('category', function ($query) {
+        $plans     = Plan::with('category')->whereHas('category', function ($query) {
             $query->active();
         })->orderBy('id', 'desc')->paginate(getPaginate());
         $categories = Category::active()->get();
-        return view('admin.plan.index', compact('pageTitle', 'plans', 'categories'));
+        $features   = Feature::all();
+        return view('admin.plan.index', compact('pageTitle', 'plans', 'categories', 'features'));
     }
 
     public function save(request $request, $id = 0)

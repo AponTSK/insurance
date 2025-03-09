@@ -5,19 +5,22 @@
         "name": "Banner Section",
         "content": {
             "images": {
-                "banner_shape": {
-                    "size": "452x904"
-                },
                 "banner_image": {
-                    "size": "468x546"
+                    "size": "470x545"
                 },
                 "mini_image": {
-                    "size": "135x28"
+                    "size": "135x30"
                 }
             },
             "title": "text",
             "subtitle": "text",
-            "short_details": "text"
+            "short_details": "text",
+            "mini_image_heading": "text",
+            "mini_image_subheading": "text",
+            "button_one_text": "text",
+            "button_one_url": "text",
+            "button_two_text": "text",
+            "button_two_url": "text"
         }
     },
     "quote": {
@@ -44,9 +47,6 @@
         "element": {
             "images": {
                 "image": {
-                    "size": "419x177"
-                },
-                "image_two": {
                     "size": "419x177"
                 }
             },
@@ -142,6 +142,11 @@
             "subheading": "text"
         },
         "element": {
+            "images": {
+                "customer_image": {
+                    "size": "32x32"
+                }
+            },
             "select": {
                 "name": "rating",
                 "options": {
@@ -152,57 +157,11 @@
                     "5": "*****"
                 }
             },
-            "images": {
-                "customer_image": {
-                    "size": "32x32"
-                }
-            },
             "title": "text",
             "description": "textarea",
             "customer_name": "text",
             "customer_designation": "text",
-            "modal": true
-        }
-    },
-    "feature": {
-        "builder": true,
-        "name": "Feature Section",
-        "content": {
-            "heading": "text",
-            "subheading": "text"
-        },
-        "element": {
-            "title": "text",
-            "description": "textarea",
-            "feature_icon": "icon",
-            "select": {
-                "name": "trx_type",
-                "options": {
-                    "deposit": "Deposit",
-                    "withdraw": "Withdraw"
-                }
-            },
             "modal": false
-        }
-    },
-    "about": {
-        "builder": true,
-        "name": "About Us",
-        "content": {
-            "images": {
-                "background_image": {
-                    "size": "500x500",
-                    "thumb": "100x100"
-                },
-                "about_image": {
-                    "size": "500x500",
-                    "thumb": "100x100"
-                }
-            },
-            "heading": "text",
-            "subheading": "text",
-            "description": "textarea",
-            "about_icon": "icon"
         }
     },
     "contact_us": {
@@ -210,15 +169,55 @@
         "no_selection": true,
         "name": "Contact Us",
         "content": {
-            "title": "text",
+            "short_title": "text",
             "heading": "text",
-            "short_heading": "text",
-            "short_details": "text",
-            "contact_details": "text",
-            "button_text": "text",
+            "subheading": "text",
+            "address": "text",
             "contact_number": "text",
+            "email": "text",
             "latitude": "text",
             "longitude": "text"
+        }
+    },
+    "health_insurance": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Health Insurance",
+        "content": {
+            "heading": "text",
+            "subheading": "text",
+            "images": {
+                "background_shape": {
+                    "size": "455x905"
+                },
+                "image": {
+                    "size": "515x580"
+                }
+            }
+        }
+    },
+    "insurance_list": {
+        "builder": true,
+        "name": "Insurance List Section",
+        "content": {
+            "images": {
+                "background_shape": {
+                    "size": "455x905"
+                },
+                "feature_image": {
+                    "size": "40x40"
+                },
+                "plan_image_one": {
+                    "size": "33x33"
+                },
+                "plan_image_two": {
+                    "size": "39x39"
+                }
+            }
+        },
+        "element": {
+            "plan_tips": "textarea-nic",
+            "modal": false
         }
     },
     "service": {
@@ -285,13 +284,12 @@
         "content": {
             "heading": "text",
             "subheading": "text",
-            "end_heading": "text",
-            "end_subheading": "text"
+            "button_heading": "text",
+            "button_subheading": "text"
         },
         "element": {
             "question": "text",
             "answer": "textarea",
-            "icon": "icon",
             "modal": true
         }
     },
@@ -301,31 +299,38 @@
         "content": {
             "heading": "text",
             "subheading": "text",
-            "button_name": "text",
-            "button_url": "text"
+            "blog_page_title": "text",
+            "blog_page_subtitle": "text"
         },
         "element": {
             "images": {
                 "image": {
-                    "size": "728x465",
-                    "thumb": "120x80"
+                    "size": "855x450",
+                    "thumb": "310x270"
                 }
             },
             "title": "text",
             "slug": "title",
+            "short_description": "text",
             "description": "textarea-nic",
             "modal": false,
             "seo": true
         }
     },
-    "fast_reliable": {
+    "cta": {
         "builder": true,
-        "name": "Fast, Reliable And Easy Insurance Section",
+        "name": "CTA Section",
         "content": {
+            "images": {
+                "background_image": {
+                    "size": "1905x355"
+                },
+                "cta_image": {
+                    "size": "475x285"
+                }
+            },
             "heading": "text",
-            "subheading": "text",
-            "button_name": "text",
-            "button_url": "text"
+            "subheading": "text"
         }
     },
     "subscribe": {
@@ -340,6 +345,8 @@
         "builder": true,
         "name": "Footer Section",
         "content": {
+            "newsletter_title": "text",
+            "newsletter_subtitle": "text",
             "title": "text",
             "short_details": "text"
         }
@@ -349,7 +356,6 @@
         "no_selection": true,
         "name": "Social Icons",
         "element": {
-            "title": "text",
             "social_icon": "icon",
             "url": "text",
             "modal": true
@@ -363,6 +369,22 @@
             "required": "text",
             "pending": "text",
             "reject": "text"
+        }
+    },
+    "login_register": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Login & Register Section",
+        "content": {
+            "images": {
+                "background_image": {
+                    "size": "1905x840"
+                }
+            },
+            "login_page_title": "text",
+            "login_page_subtitle": "text",
+            "register_page_title": "text",
+            "register_page_subtitle": "text"
         }
     }
 }

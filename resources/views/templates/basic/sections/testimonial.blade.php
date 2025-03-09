@@ -21,7 +21,7 @@
                     <div class="testimonial-item">
                         <div class="testimonial-item__rating">
                             <ul class="rating-list">
-                                @for ($i = 0; $i < $testimonialElement->rating; $i++)
+                                @for ($i = 0; $i < $testimonialElement->data_values->rating; $i++)
                                     <li class="rating-list__item"><i class="fas fa-star"></i></li>
                                 @endfor
                             </ul>

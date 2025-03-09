@@ -7,6 +7,6 @@ class Feature extends Model
 {
     public function category()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Plan::class);
     }
 }

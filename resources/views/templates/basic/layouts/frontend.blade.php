@@ -14,18 +14,19 @@
 
     <link rel="stylesheet" href="{{ asset('assets/global/css/line-awesome.min.css') }}">
 
+    <link rel="stylesheet" href="{{ asset($activeTemplateTrue . 'css/custom.css') }}">
     <link rel="stylesheet" href="{{ asset($activeTemplateTrue . 'css/main.css') }}">
     <link rel="stylesheet" href="{{ asset($activeTemplateTrue . 'css/main.css.map') }}">
-    <link rel="stylesheet" href="{{ asset($activeTemplateTrue . 'css/custom.css') }}">
-    <link rel="stylesheet" href="{{ asset($activeTemplateTrue . 'css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset($activeTemplateTrue . 'css/selet2.min.css') }}">
 
     @stack('style-lib')
 
     @stack('style')
     {{-- <style>
-        :root{
+        :root {
             --main: 115, 103, 240;
         }
+
         body {
             display: flex;
             align-items: center;
@@ -34,9 +35,12 @@
             background-color: #f6f6f6;
             min-height: 100vh;
         }
-        body > div,body > section {
+
+        body>div,
+        body>section {
             width: 100%;
         }
+
         body {
             display: flex;
             align-items: center;
@@ -45,72 +49,90 @@
             background-color: #f6f6f6;
             min-height: 100vh;
         }
-        body > div,body > section {
+
+        body>div,
+        body>section {
             width: 100%;
         }
+
         .custom--card {
-            box-shadow: 0 3px 35px rgba(0,0,0, .1);
+            box-shadow: 0 3px 35px rgba(0, 0, 0, .1);
             border: 0;
         }
-        .custom--card .card-header,.custom--card .card-footer  {
+
+        .custom--card .card-header,
+        .custom--card .card-footer {
             padding: 13px 25px;
             text-align: center;
             background-color: rgb(var(--main));
             border: 0;
         }
+
         .custom--card .card-header .title {
             margin-bottom: 0;
             color: #fff
         }
+
         .custom--card .card-body {
             padding: 25px;
             border: 0;
         }
+
         .form-group {
             margin-bottom: 15px;
         }
+
         .form-label {
             font-size: 15px;
             font-weight: 500;
             color: #555;
         }
-        .form--control.input,.form--control.select{
+
+        .form--control.input,
+        .form--control.select {
             height: 45px;
         }
+
         .form--control {
             border-width: 2px;
             border-color: #dce1e6;
         }
+
         .form--control:focus {
             border-color: rgb(var(--main));
             box-shadow: 0 0 25px rgba(var(--main) 0.071);
             outline: 0;
         }
+
         .forgot-pass {
             font-size: 14px;
         }
+
         .btn--base {
             color: #fff;
             background-color: rgb(var(--main));
         }
+
         .btn--base:hover {
             color: #fff;
         }
+
         .btn {
             padding: 10px 30px;
             font-weight: 500;
         }
-        .home-link{
+
+        .home-link {
             text-decoration: none
         }
 
-        label.required:after{
+        label.required:after {
             content: '*';
-            color: #DC3545!important;
+            color: #DC3545 !important;
             margin-left: 2px;
         }
     </style> --}}
-    {{-- <link rel="stylesheet" href="{{ asset($activeTemplateTrue.'css/color.php') }}?color={{ gs('base_color') }}&secondColor={{ gs('secondary_color') }}"> --}}
+    {{-- <link rel="stylesheet" href="{{ asset($activeTemplateTrue . 'css/color.php') }}?color={{ gs('base_color') }}&secondColor={{ gs('secondary_color') }}"> --}}
 </head>
 @php echo loadExtension('google-analytics') @endphp
 
@@ -138,6 +160,7 @@
 
     @yield('content')
 
+    @include($activeTemplate . 'partials.footer')
     @php
         $cookie = App\Models\Frontend::where('data_keys', 'cookie.data')->first();
     @endphp

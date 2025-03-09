@@ -9,8 +9,8 @@
         <div class="row justify-content-center">
             <div class="col-lg-12">
                 <div class="section-heading style-three">
-                    <h2 class="section-heading__title"> {{ @$coverageContent->data_values->title }}</h2>
-                    <p class="section-heading__desc">{{ @$coverageContent->data_values->subtitle }}</p>
+                    <h2 class="section-heading__title"> {{ __(@$coverageContent->data_values->title) }}</h2>
+                    <p class="section-heading__desc">{{ __(@$coverageContent->data_values->subtitle) }}</p>
                 </div>
             </div>
         </div>

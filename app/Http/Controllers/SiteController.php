@@ -7,11 +7,13 @@ use App\Models\Frontend;
 use App\Models\Language;
 use App\Models\Page;
 use App\Models\Plan;
+use App\Models\Subscriber;
 use App\Models\SupportMessage;
 use App\Models\SupportTicket;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Validator;
 
 class SiteController extends Controller
 {
@@ -118,6 +120,17 @@ class SiteController extends Controller
         return back();
     }
 
+    public function blogs()
+    {
+        $pageTitle   = 'Blogs';
+        $blogs       = Frontend::where('data_keys', 'blog.element')->latest()->paginate(getPaginate(21));
+        $latest      = Frontend::latest()->where('data_keys', 'blog.element')->limit(10)->get();
+        $sections    = Page::where('tempname', activeTemplate())->where('slug', 'blog')->first();
+        $seoContents = $sections->seo_content;
+        $seoImage    = @$seoContents->image ? frontendImage('blog', $seoContents->image, getFileSize('seo'), true) : null;
+        return view('Template::blogs', compact('pageTitle', 'blogs', 'latest', 'sections', 'seoContents', 'seoImage'));
+    }
+
     public function blogDetails($slug)
     {
         $blog        = Frontend::where('slug', $slug)->where('data_keys', 'blog.element')->firstOrFail();
@@ -180,37 +193,36 @@ class SiteController extends Controller
         return view('Template::maintenance', compact('pageTitle', 'maintenance'));
     }
 
-    public function healthPlan()
+    public function category($id)
     {
         $pageTitle = 'Home';
 
         $healthPlans = Plan::whereHas('category', function ($query) {
             $query->where('name', 'Health Insurance');
-        })->where('status', '1')->get();
+        })->where('status', 1)->findOrFail($id);
 
-        $maxChildren    = $healthPlans->max('no_children');
-        $coverageAmount = $healthPlans->max('coverage_amount');
+        $maxChildren    = $healthPlans->where('status', 1)->max('no_children');
+        $coverageAmount = $healthPlans->where('status', 1)->max('coverage_amount');
         $info           = json_decode(json_encode(getIpInfo()), true);
         $mobileCode     = @implode(',', $info['code']);
         $countries      = json_decode(file_get_contents(resource_path('views/partials/country.json')));
 
-        return view('Template::plan.index', compact('pageTitle', 'maxChildren', 'coverageAmount', 'mobileCode', 'countries'));
+        return view('Template::plan.insurance', compact('pageTitle', 'maxChildren', 'coverageAmount', 'mobileCode', 'countries'));
     }
 
     public function showPlans(Request $request)
     {
         $validatedData = $request->validate([
             'full_name'       => 'required|string',
-            'country'         => 'required|string',
             'mobile'          => 'required|string',
-            'member'          => 'required|string',
+            'member'          => 'nullable|string',
             'your_age'        => 'required|string',
             'spouse_age'      => 'nullable|string',
-            'children_count'  => 'required|string',
+            'children_count'  => 'nullable|string',
             'coverage_amount' => 'required|string',
         ]);
 
-        $query = Plan::where('status', '1');
+        $query = Plan::active();
 
         if ($validatedData['coverage_amount'] !== "all") {
             $query->where('coverage_amount', '<=', $validatedData['coverage_amount']);
@@ -236,9 +248,26 @@ class SiteController extends Controller
         return view('Template::plan.compare', compact('plans', 'pageTitle'));
     }
 
-    public function quoteForm()
+    public function subscribe(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|unique:subscribers,email',
+        ]);
 
+        if ($validator->fails()) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => $validator->errors()->all(),
+            ]);
+        }
+
+        $subscriber        = new Subscriber();
+        $subscriber->email = $request->email;
+        $subscriber->save();
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Subscription successful!',
+        ]);
     }
-
 }

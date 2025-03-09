@@ -30,6 +30,7 @@ Route::controller('SiteController')->group(function () {
 
     Route::get('/cookie/accept', 'cookieAccept')->name('cookie.accept');
 
+    Route::get('blogs', 'blogs')->name('blogs');
     Route::get('blog/{slug}', 'blogDetails')->name('blog.details');
 
     Route::get('policy/{slug}', 'policyPages')->name('policy.pages');
@@ -37,10 +38,12 @@ Route::controller('SiteController')->group(function () {
     Route::get('placeholder-image/{size}', 'placeholderImage')->withoutMiddleware('maintenance')->name('placeholder.image');
     Route::get('maintenance-mode', 'maintenance')->withoutMiddleware('maintenance')->name('maintenance');
 
+    Route::get('/category/{id}', 'category')->name('category.details');
+    Route::post('/show/plan', 'showPlans')->name('show.plan');
+    Route::get('/compare/plan', 'comparePlan')->name('compare.plan');
+    Route::post('/subscribe', 'subscribe')->name('subscribe');
+
     Route::get('/{slug}', 'pages')->name('pages');
     Route::get('/', 'index')->name('home');
 
-    Route::get('/health/plan', 'healthPlan')->name('health.plan');
-    Route::get('/show/plan', 'showPlans')->name('show.plan');
-    Route::get('/compare/plan', 'comparePlan')->name('compare.plan');
 });

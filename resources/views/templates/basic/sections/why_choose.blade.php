@@ -9,9 +9,9 @@
     <div class="container">
         <div class="section-heading">
             <h2 class="section-heading__title" data-highlight="[2]">
-                {{ @$whyChooseContent->data_values->heading }}
+                {{ __(@$whyChooseContent->data_values->heading) }}
             </h2>
-            <p class="section-heading__desc"> {{ @$whyChooseContent->data_values->subheading }} </p>
+            <p class="section-heading__desc"> {{ __(@$whyChooseContent->data_values->subheading) }} </p>
         </div>
         <div class="choose-us-wrapper">
             <div class="choose-us-slider">
@@ -35,7 +35,7 @@
                 @endforeach
             </div>
             <div class="choose-us-wrapper__bottom">
-                <h4 class="title"> {{ @$whyChooseContent->data_values->button_heading }} </h4>
+                <h4 class="title"> {{ __(@$whyChooseContent->data_values->button_heading) }} </h4>
                 <a href="#" class="btn btn--base"> @lang('Contact With Us') </a>
             </div>
         </div>

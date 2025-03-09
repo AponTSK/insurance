@@ -52,6 +52,13 @@
         "route_name": "admin.plan.index",
         "menu_active": "admin.plan*"
     },
+    "features": {
+        "keyword": ["features"],
+        "title": "Manage Features",
+        "icon": "las la-feather",
+        "route_name": "admin.feature.index",
+        "menu_active": "admin.feature*"
+    },
     "manage_users": {
         "title": "Manage Users",
         "icon": "las la-users",

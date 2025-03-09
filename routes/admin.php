@@ -94,6 +94,12 @@ Route::middleware('admin')->group(function () {
         Route::post('status/{id}', 'toggleStatus')->name('status');
     });
 
+    //feature
+    Route::controller('FeatureController')->prefix('feature')->name('feature.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('save/{id?}', 'save')->name('save');
+    });
+
     // Subscriber
     Route::controller('SubscriberController')->prefix('subscriber')->name('subscriber.')->group(function () {
         Route::get('/', 'index')->name('index');

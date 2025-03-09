@@ -18,9 +18,9 @@
                         <div class="counter-item__number">
                             <span class="odometer" data-odometer-final="{{ $counterElement->data_values->number }}"></span>{{ $counterElement->data_values->sign }}
                         </div>
-                        <h4 class="counter-item__title"> {{ $counterElement->data_values->title }} </h4>
+                        <h4 class="counter-item__title"> {{ __($counterElement->data_values->title) }} </h4>
                         <p class="counter-item__desc">
-                            {{ $counterElement->data_values->short_decription }}
+                            {{ __($counterElement->data_values->short_decription) }}
                         </p>
                     </div>
                 </div>

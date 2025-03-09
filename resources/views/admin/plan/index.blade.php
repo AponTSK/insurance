@@ -114,6 +114,7 @@
                                     @endforeach
                                 </select>
                             </div>
+
                             <div class="form-group col-md-6">
                                 <label>@lang('Price')</label>
                                 <div class="input-group">

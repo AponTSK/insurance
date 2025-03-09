@@ -1,15 +1,20 @@
+@php
+    use App\Models\Category;
+    $categories = Category::where('status', 1)->get();
+@endphp
+
 <header class="header" id="header">
     <div class="container">
         <nav class="navbar navbar-expand-xl navbar-light">
-            <a class="navbar-brand logo" href="index{{ route('home') }}">
-                <img src="{{ siteLogo() }}" alt="logo">
+            <a class="navbar-brand logo" href="{{ route('home') }}">
+                <img src="{{ siteLogo('dark') }}" alt="logo">
             </a>
             <button class="navbar-toggler header-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
                 <span id="hiddenNav"><i class="las la-bars"></i></span>
             </button>
             <div class="offcanvas border-0 offcanvas-end" tabindex="-1" id="offcanvasDarkNavbar">
                 <div class="offcanvas-header">
-                    <a class="logo navbar-brand" href="index.html">
+                    <a class="logo navbar-brand" href="{{ route('home') }}">
                         <img src="{{ siteLogo() }}" alt="logo">
                     </a>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close">
@@ -26,28 +31,20 @@
                                 @lang('Our Services') <span class="nav-item__icon"><i class="las la-angle-down"></i></span>
                             </a>
                             <ul class="dropdown-menu header-dropdown">
-                                <li class="dropdown-menu__list">
-                                    <a class="dropdown-item dropdown-menu__link" href="insurance.html">@lang(' Insurance') </a>
-                                </li>
-                                <li class="dropdown-menu__list">
-                                    <a class="dropdown-item dropdown-menu__link" href="dashboard.html"> @lang('Dashboard') </a>
-                                </li>
-                                <li class="dropdown-menu__list">
-                                    <a class="dropdown-item dropdown-menu__link" href="#"> Dropdown 3 </a>
-                                </li>
-                                <li class="dropdown-menu__list">
-                                    <a class="dropdown-item dropdown-menu__link" href="#"> Dropdown 4 </a>
-                                </li>
-                                <li class="dropdown-menu__list">
-                                    <a class="dropdown-item dropdown-menu__link" href="#"> Dropdown 5 </a>
-                                </li>
+
+                                @foreach ($categories as $category)
+                                    <li class="dropdown-menu__list">
+                                        <a class="dropdown-item dropdown-menu__link" href="{{ route('category.details', $category->id) }}">{{ __($category->name) }}</a>
+                                    </li>
+                                @endforeach
+
                             </ul>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#"> @lang('Claims') </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="blog.html"> @lang('Blog') </a>
+                            <a class="nav-link" href="{{ route('blogs') }}"> @lang('Blog') </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('contact') }}"> @lang('Contact Us') </a>

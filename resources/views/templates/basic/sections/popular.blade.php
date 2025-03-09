@@ -1,6 +1,5 @@
 @php
-    use App\Models\Category;
-    @$categories = Category::where('status', 1)->take(3)->get();
+    @$categories = App\Models\Category::active()->take(3)->get();
     @$popularContent = getContent('popular.content', true);
 @endphp
 
@@ -25,7 +24,7 @@
                         </div>
                         <div class="popular-item__content">
                             <h4 class="popular-item__title">
-                                <a href="#" class="popular-item__title-link border-effect"> {{ __($category->name) }} </a>
+                                <a href="{{ route('category.details', $category->id) }}" class="popular-item__title-link border-effect"> {{ __($category->name) }} </a>
                             </h4>
                             <div class="advantage-wrapper">
                                 <p class="advantage-wrapper__title"> @lang('Benefits:') </p>
@@ -45,7 +44,9 @@
                                 </ul>
                             </div>
                             <div class="popular-item__bottom">
-                                <button class="btn--white btn w-100"> @lang('Get Your Insurance Now') </button>
+                                <a href="{{ route('category.details', $category->id) }}" class="btn--white btn w-100">
+                                    @lang('Get Your Insurance Now')
+                                </a>
                             </div>
                         </div>
                     </div>
