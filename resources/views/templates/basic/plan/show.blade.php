@@ -44,10 +44,10 @@
                 </div>
             </div>
             <div class="plan-container">
-                <h3 class="plan-container__title"> @lang('Health Insurance Plans List') </h3>
+                <h3 class="plan-container__title"> {{ __($category->name) }} @lang('Plans') </h3>
                 <div class="plan-wrapper">
                     <div class="plan-wrapper__left">
-                        @forelse($healthPlans as $plan)
+                        @forelse($plans as $plan)
                             <div class="plan-item">
                                 <div class="plan-item__content">
                                     <p class="plan-item__title"> @lang('Health Coverage') </p>

@@ -188,7 +188,7 @@
 
 @push('breadcrumb-plugins')
     <button type="button" class="btn btn-outline--primary add-plan-btn btn-sm">
-        <i class="las la-plus"></i> @lang('Add')
+        <i class="las la-plus"></i>@lang('Add New')
     </button>
 @endpush
 

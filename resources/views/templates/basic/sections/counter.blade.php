@@ -5,7 +5,7 @@
 
 <div class="counter-section">
     <div class="counter-section__shape">
-        <img src="{{ frontendImage('counter', @$counterContent->data_values->bg_image) }}" alt="image">
+        <img src="{{ frontendImage('counter', @$counterContent->data_values->bg_image, '1905x480') }}" alt="image">
     </div>
     <div class="container">
         <div class="section-heading">

@@ -3,8 +3,7 @@
     @$footerIcons = getContent('social_icon.element', false, orderById: true);
     @$contactContent = getContent('contact_us.content', true);
 
-    use App\Models\Category;
-    $categories = Category::where('status', 1)->get();
+    $categories = App\Models\Category::active()->get();
 @endphp
 
 <footer class="footer-area">
@@ -43,7 +42,7 @@
                             <ul class="social-list">
                                 @foreach ($footerIcons as $footerIcon)
                                     <li class="social-list__item">
-                                        <a href="{{ @$footerIcon->data_values->url }}" class="social-list__link flex-center">
+                                        <a href="{{ @$footerIcon->data_values->url }}" target="_blank" class="social-list__link flex-center">
                                             @php
                                                 echo @$footerIcon->data_values->social_icon;
                                             @endphp
@@ -90,13 +89,17 @@
                             <li class="footer-contact-menu__item">
                                 <p class="text"> @lang('Email'):</p>
                                 <div class="footer-contact-menu__item-content">
-                                    <p> {{ __($contactContent->data_values->email) }} </p>
+                                    <a href="mailto:{{ __($contactContent->data_values->email) }}">
+                                        {{ __($contactContent->data_values->email) }}
+                                    </a>
                                 </div>
                             </li>
                             <li class="footer-contact-menu__item">
                                 <p class="text"> @lang('Phone'): </p>
                                 <div class="footer-contact-menu__item-content">
-                                    <p> {{ __($contactContent->data_values->contact_number) }} </p>
+                                    <a href="tel:{{ __($contactContent->data_values->contact_number) }}">
+                                        {{ __($contactContent->data_values->contact_number) }}
+                                    </a>
                                 </div>
                             </li>
                         </ul>
@@ -109,7 +112,6 @@
                     <div class="row">
                         <div class="col-md-12 text-center">
                             <p class="bottom-footer-text text-white"> &copy; @lang('Copyright') @php echo date('Y') @endphp . @lang('All rights reserved').</p>
-                            <p class="bottom-footer__desc"> @lang('Your trusted partner in protection.') </p>
                         </div>
                     </div>
                 </div>
@@ -119,6 +121,8 @@
     <!-- Footer Top End-->
 
 </footer>
+
+
 
 
 @push('script')
@@ -137,8 +141,8 @@
                     processData: false,
                     contentType: false,
                     success: function(response) {
-                        $('.newsletter-form').trigger('reset');
                         if (response.status == 'success') {
+                            $('.newsletter-form').trigger('reset');
                             notify('success', response.message);
                             $('.newsletter-content').html(response.html);
                         } else {

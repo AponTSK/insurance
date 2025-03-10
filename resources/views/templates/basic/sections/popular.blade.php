@@ -1,5 +1,5 @@
 @php
-    @$categories = App\Models\Category::active()->take(3)->get();
+    @$categories = App\Models\Category::active()->where('is_popular', 1)->get();
     @$popularContent = getContent('popular.content', true);
 @endphp
 

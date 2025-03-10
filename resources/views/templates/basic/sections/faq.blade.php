@@ -64,7 +64,7 @@
             <h4 class="title"> {{ __(@$faqContent->data_values->button_heading) }} </h4>
             <p class="desc"> {{ __(@$faqContent->data_values->button_subheading) }} </p>
             <div class="faq-section__btn">
-                <a href="{{ route('contact') }}" class="btn btn--base"> @lang('Contact With US') </a>
+                <a href="{{ @$faqContent->data_values->button_url }}" class="btn btn--base"> {{ __(@$faqContent->data_values->button_text) }} </a>
             </div>
         </div>
     </div>

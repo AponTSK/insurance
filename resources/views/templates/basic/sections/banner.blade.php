@@ -1,5 +1,5 @@
 @php
-    $categories = App\Models\Category::active()->get();
+    $categories = App\Models\Category::active()->where('is_featured', 1)->get();
     @$bannerContent = getContent('banner.content', true);
 @endphp
 
@@ -24,12 +24,12 @@
                 <div class="col-lg-5 ps-xl-5">
                     <div class="banner-thumb-wrapper">
                         <div class="banner-thumb">
-                            <img src="{{ frontendImage('banner', @$bannerContent->data_values->banner_image) }}" alt="image">
+                            <img src="{{ frontendImage('banner', @$bannerContent->data_values->banner_image, '470x545') }}" alt="image">
                         </div>
                         <div class="banner-thumb-wrapper__client">
                             <h3 class="title"> {{ __(@$bannerContent->data_values->mini_image_heading) }}</h3>
                             <p class="text">{{ __(@$bannerContent->data_values->mini_image_subheading) }}</p>
-                            <img src="{{ frontendImage('banner', @$bannerContent->data_values->mini_image) }}" alt="image">
+                            <img src="{{ frontendImage('banner', @$bannerContent->data_values->mini_image, '135x30') }}" alt="image">
                         </div>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
             <div class="row gy-4 justify-content-center">
                 @foreach ($categories as $category)
                     <div class="col-xxl-2 col-md-4 col-sm-6">
-                        <a href="#" class="category-item">
+                        <a href="{{ route('category.details', $category->id) }}" class="category-item">
                             <div class="category-item__thumb">
                                 <img src="{{ getImage(getFilePath('categoryIconImage') . '/' . $category->icon, getFileSize('categoryIconImage')) }}" alt="image">
                             </div>

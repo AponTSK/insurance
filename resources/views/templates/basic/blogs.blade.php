@@ -27,11 +27,10 @@
                                 <p class="blog-item__desc">
                                     {{ __(@$blog->data_values->short_description) }}
                                 </p>
-                                <div class="blog-item__bottom">
+                                <div class="blog-item__bottom ">
                                     <span class="title"> @lang('Published') </span>
                                     <ul class="text-list flex-align">
                                         <li class="text-list__item fs-14"> {{ showDateTime(@$blog->created_at, 'd M Y') }} </li>
-                                        <li class="text-list__item fs-14"> @lang('5 min read') </li>
                                     </ul>
                                 </div>
                             </div>

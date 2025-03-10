@@ -21,7 +21,7 @@
                 <div class="col-lg-4 col-sm-6">
                     <div class="how-work-item">
                         <div class="how-work-item__thumb">
-                            <img src="{{ frontendImage('how_it_works', @$howItWorkElement->data_values->image) }}" alt="image">
+                            <img src="{{ frontendImage('how_it_works', @$howItWorkElement->data_values->image, '64x64') }}" alt="image">
                         </div>
                         <h4 class="how-work-item__title">{{ $loop->iteration }}. {{ __(@$howItWorkElement->data_values->title) }} </h4>
                         <p class="how-work-item__desc">

@@ -1,7 +1,5 @@
 @php
-
-    @$healthInsuranceContent = getContent('health_insurance.content', true);
-
+    @$insuranceContent = getContent('health_insurance.content', true);
     $coverageAmountOptions = [];
     $incrementAmount = 5000;
     $limit = 20000;
@@ -14,20 +12,23 @@
 @extends($activeTemplate . 'layouts.frontend')
 @section('content')
     <div class="insurance-section py-60">
-        <div class="insurance-section__shape">
-            <img src="{{ frontendImage('health_insurance', $healthInsuranceContent->data_values->background_shape) }}" alt="image" />
+        <div class="banner-section__shape">
+            <img src="{{ asset($activeTemplateTrue . 'images/bs-1.png') }}" alt="image">
         </div>
         <div class="container">
             <div class="section-heading">
-                <h2 class="section-heading__title">@lang('Health Insurance')</h2>
-                <p class="section-heading__desc">@lang('Choose the best Health Insurance Plan')</p>
+                <h2 class="section-heading__title">{{ __($category->name) }}</h2>
+                <p class="section-heading__desc">@lang('Choose the best :category Plan', ['category' => $category->name])</p>
+
             </div>
             <form action="{{ route('show.plan') }}" method="POST">
                 @csrf
+                <input type="hidden" name="category_id" value="{{ $category->id }}">
                 <div class="row gy-4">
                     <div class="col-lg-6">
                         <div class="insurance-thumb">
-                            <img src="{{ frontendImage('health_insurance', $healthInsuranceContent->data_values->image) }}" alt="image" />
+                            <img src="{{ frontendImage('health_insurance', $insuranceContent->data_values->image, '515x580') }}" alt="image" />
+                            {{-- <img src="{{ getImage(getFilePath('categoryImage') . '/' . $category->image, getFileSize('categoryImage')) }}" alt="image"> --}}
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -81,17 +82,19 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-sm-12">
-                                <label class="form--label">@lang('Number of Children (Below 18 years)')</label>
-                                <div class="check-wrapper">
-                                    @for ($i = 1; $i <= $maxChildren; $i++)
-                                        <label class="type--check" for="child_{{ $i }}">
-                                            <input class="d-none" type="radio" id="child_{{ $i }}" name="children_count" value="{{ $i }}" />
-                                            <span class="type-text">@lang(':count Child', ['count' => $i])</span>
-                                        </label>
-                                    @endfor
+                            @if ($maxChildren > 0)
+                                <div class="col-sm-12">
+                                    <label class="form--label">@lang('Number of Children (Below 18 years)')</label>
+                                    <div class="check-wrapper">
+                                        @for ($i = 1; $i <= $maxChildren; $i++)
+                                            <label class="type--check" for="child_{{ $i }}">
+                                                <input class="d-none" type="radio" id="child_{{ $i }}" name="children_count" value="{{ $i }}" />
+                                                <span class="type-text">@lang(':count Child', ['count' => $i])</span>
+                                            </label>
+                                        @endfor
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                             <div class="col-sm-12">
                                 <label class="form--label">@lang('Health Coverage Amount')</label>
                                 <div class="check-wrapper">

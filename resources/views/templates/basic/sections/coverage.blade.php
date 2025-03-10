@@ -16,7 +16,7 @@
         </div>
         <div class="client-logos brand-slider">
             @foreach ($coverageElements as $coverageElement)
-                <img src="{{ frontendImage('coverage', @$coverageElement->data_values->image) }}" alt="image">
+                <img src="{{ frontendImage('coverage', @$coverageElement->data_values->image, '160X45') }}" alt="image">
             @endforeach
         </div>
     </div>
