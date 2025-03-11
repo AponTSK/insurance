@@ -40,6 +40,7 @@ Route::controller('SiteController')->group(function () {
 
     Route::get('/category/{id}', 'category')->name('category.details');
     Route::post('/show/plan', 'showPlans')->name('show.plan');
+    Route::get('/detail/plan/{id}', 'detailPlans')->name('detail.plan');
     Route::get('/compare/plan', 'comparePlan')->name('compare.plan');
     Route::post('/subscribe', 'subscribe')->name('subscribe');
     Route::post('quote/update', 'quoteUpdate')->name('quote.update');

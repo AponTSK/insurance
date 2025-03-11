@@ -93,7 +93,9 @@
         "name": "How It Works",
         "content": {
             "heading": "text",
-            "subheading": "text"
+            "subheading": "text",
+            "button_text": "text",
+            "button_url": "text"
         },
         "element": {
             "images": {
@@ -212,7 +214,9 @@
                 "plan_image_two": {
                     "size": "40x40"
                 }
-            }
+            },
+            "feature_title": "text",
+            "cover_title": "text"
         },
         "element": {
             "plan_tips": "textarea-nic",

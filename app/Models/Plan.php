@@ -19,6 +19,10 @@ class Plan extends Model
 
     public function features()
     {
-        return $this->belongsToMany(Feature::class, 'feature_plan', 'plan_id', 'feature_id');
+        return $this->belongsToMany(Feature::class, 'feature_plans', 'plan_id', 'feature_id');
+    }
+    public function notCovers()
+    {
+        return $this->belongsToMany(NotCover::class, 'not_covered_plans');
     }
 }

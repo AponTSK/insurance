@@ -7,7 +7,7 @@
     $rightFaqElements = $faqElements->slice($half);
 @endphp
 
-<div class="faq-section py-60">
+<div class="faq-section py-60" id="faq">
     <span class="right-bg"></span>
     <div class="container">
         <div class="section-heading">

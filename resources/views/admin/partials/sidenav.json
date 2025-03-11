@@ -59,8 +59,15 @@
         "route_name": "admin.feature.index",
         "menu_active": "admin.feature*"
     },
+    "cover": {
+        "keyword": ["covers"],
+        "title": "What Not Covers",
+        "icon": "las la-question",
+        "route_name": "admin.notcover.index",
+        "menu_active": "admin.notcover*"
+    },
     "quotes": {
-        "keyword": ["features"],
+        "keyword": ["Quotes"],
         "title": "Quote Requests",
         "icon": "las la-quote-right",
         "route_name": "admin.quote.index",

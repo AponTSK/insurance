@@ -4,7 +4,7 @@
 
 @endphp
 
-<div class="area-section py-60 bg-img" data-background-image="{{ frontendImage('quote', @$quoteContent->data_values->quote_bg, '1905x450') }}" alt="image">
+<div class="area-section py-60 bg-img" id="quote" data-background-image="{{ frontendImage('quote', @$quoteContent->data_values->quote_bg, '1905x450') }}" alt="image">
     <div class="left-bg"></div>
     <div class="right-bg"></div>
     <div class="container">

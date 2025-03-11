@@ -25,6 +25,16 @@
                                             <button type="button" class="btn btn-outline--primary btn-sm edit-feature-btn" data-feature='@json($feature)'>
                                                 <i class="las la-pen"></i>@lang('Edit')
                                             </button>
+                                            @if ($feature->status == Status::DISABLE)
+                                                <button type="button" class="btn btn-sm btn-outline--success confirmationBtn" data-action="{{ route('admin.feature.status', $feature->id) }}"
+                                                    data-question="@lang('Are you sure to enable this feature?')">
+                                                    <i class="la la-eye"></i> @lang('Enable')
+                                                </button>
+                                            @else
+                                                <button type="button" class="btn btn-sm btn-outline--danger confirmationBtn" data-action="{{ route('admin.feature.status', $feature->id) }}" data-question="@lang('Are you sure to disable this feature?')">
+                                                    <i class="la la-eye-slash"></i> @lang('Disable')
+                                                </button>
+                                            @endif
                                         </td>
                                     </tr>
                                 @empty
@@ -69,7 +79,7 @@
                             </div>
                             <div class="form-group">
                                 <label>@lang('Image')</label>
-                                <input type="file" class="form-control" name="image" required />
+                                <x-image-uploader id="image" class="feature-image-uploader w-100" type="featureImage" :required=false :image="''" />
                             </div>
                         </div>
                     </div>
@@ -99,6 +109,7 @@
                 featureModal.find('.modal-title').text('@lang('Add Feature')');
                 featureForm.attr('action', '{{ route('admin.feature.save') }}');
                 featureForm.trigger('reset');
+                $('.image-upload-preview').css('background-image', 'none');
                 featureModal.modal('show');
             });
 
@@ -108,6 +119,8 @@
                 featureForm.attr('action', "{{ route('admin.feature.save', '') }}/" + feature.id);
                 featureModal.find('input[name=title]').val(feature.title);
                 featureModal.find('input[name=subtitle]').val(feature.subtitle);
+                $('.feature-image-uploader .image-upload-preview').css('background-image', `url(${$(this).data('image')})`);
+
                 featureModal.modal('show');
             });
         })(jQuery);

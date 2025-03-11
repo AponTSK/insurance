@@ -3,7 +3,7 @@
     @$footerIcons = getContent('social_icon.element', false, orderById: true);
     @$contactContent = getContent('contact_us.content', true);
 
-    $categories = App\Models\Category::active()->get();
+    $categories = App\Models\Category::active()->where('is_popular', 1)->get();
 @endphp
 
 <footer class="footer-area">
@@ -59,9 +59,9 @@
                         <ul class="footer-menu">
                             <li class="footer-menu__item"><a href="#" class="footer-menu__link"> @lang('Our Insurances') </a></li>
                             <li class="footer-menu__item"><a href="#" class="footer-menu__link"> @lang('Claims Process') </a></li>
-                            <li class="footer-menu__item"><a href="#" class="footer-menu__link"> @lang('Blog') </a></li>
-                            <li class="footer-menu__item"><a href="#" class="footer-menu__link"> @lang('FAQs') </a></li>
-                            <li class="footer-menu__item"><a href="#" class="footer-menu__link"> @lang('Contact Us') </a></li>
+                            <li class="footer-menu__item"><a href="{{ route('blogs') }}" class="footer-menu__link"> @lang('Blog') </a></li>
+                            <li class="footer-menu__item"><a href="#faq" class="footer-menu__link"> @lang('FAQs') </a></li>
+                            <li class="footer-menu__item"><a href="{{ route('contact') }}" class="footer-menu__link"> @lang('Contact Us') </a></li>
                         </ul>
                     </div>
                 </div>

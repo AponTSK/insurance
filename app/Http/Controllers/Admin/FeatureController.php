@@ -10,7 +10,7 @@ class FeatureController extends Controller
 {
     public function index()
     {
-        $pageTitle = 'Manage Categories';
+        $pageTitle = 'Manage Fetaures';
         $features  = Feature::orderBy('id', 'desc')->paginate(getPaginate());
         return view('admin.feature.index', compact('pageTitle', 'features'));
     }
@@ -50,4 +50,9 @@ class FeatureController extends Controller
         $notify[] = ['success', $message];
         return back()->withNotify($notify);
     }
+    public function toggleStatus($id)
+    {
+        return Feature::changeStatus($id);
+    }
+
 }

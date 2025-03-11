@@ -32,7 +32,7 @@
             @endforeach
         </div>
         <div class="how-work-section__bottom">
-            <a href="#" class="btn btn--base"> @lang('Apply Now') </a>
+            <a href="{{ $howItWorkContent->data_values->button_url }}" class="btn btn--base"> {{ __($howItWorkContent->data_values->button_text) }} </a>
         </div>
     </div>
 </div>

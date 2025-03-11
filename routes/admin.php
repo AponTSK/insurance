@@ -100,6 +100,13 @@ Route::middleware('admin')->group(function () {
     Route::controller('FeatureController')->prefix('feature')->name('feature.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('save/{id?}', 'save')->name('save');
+        Route::post('status/{id}', 'toggleStatus')->name('status');
+    });
+    //not covers
+    Route::controller('NotCoversController')->prefix('notcover')->name('notcover.')->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('save/{id?}', 'save')->name('save');
+        Route::post('status/{id}', 'toggleStatus')->name('status');
     });
     //quotes
     Route::controller('QuoteController')->prefix('quote')->name('quote.')->group(function () {

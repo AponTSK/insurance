@@ -140,7 +140,7 @@
 
     @stack('fbComment')
 
-    {{-- <div class="preloader">
+    <div class="preloader">
         <div class="loader-p"></div>
     </div>
     <!--==================== Preloader End ====================-->
@@ -154,7 +154,7 @@
 
     <!-- ==================== Scroll to Top End Here ==================== -->
     <a class="scroll-top"><i class="fas fa-angle-double-up"></i></a>
-    <!-- ==================== Scroll to Top End Here ==================== --> --}}
+    <!-- ==================== Scroll to Top End Here ==================== -->
 
     @include($activeTemplate . 'partials.header')
 

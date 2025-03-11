@@ -9,6 +9,7 @@ use App\Models\Language;
 use App\Models\Page;
 use App\Models\Plan;
 use App\Models\quote;
+use App\Models\QuoteTopic;
 use App\Models\Subscriber;
 use App\Models\SupportMessage;
 use App\Models\SupportTicket;
@@ -224,7 +225,12 @@ class SiteController extends Controller
             'category_id'     => 'required|exists:categories,id',
         ]);
 
-        $category = Category::findOrFail($validatedData['category_id']);
+        $info       = json_decode(json_encode(getIpInfo()), true);
+        $mobileCode = @implode(',', $info['code']);
+        $countries  = json_decode(file_get_contents(resource_path('views/partials/country.json')));
+
+        $category    = Category::findOrFail($validatedData['category_id']);
+        $quoteTopics = QuoteTopic::active()->with('quote')->orderBy('id', 'desc')->get();
 
         $query = Plan::active()->where('category_id', $validatedData['category_id']);
 
@@ -232,10 +238,16 @@ class SiteController extends Controller
             $query->where('coverage_amount', '<=', $validatedData['coverage_amount']);
         }
 
+        if (! empty($validatedData['children_count']) && $validatedData['children_count'] > 0) {
+            $query->where('no_children', '<=', $validatedData['children_count']);
+        }
+
+        $query->where('children_coverage', 1);
+
         $plans     = $query->get();
         $pageTitle = $category->name . ' Plans';
 
-        return view('Template::plan.show', compact('pageTitle', 'plans', 'validatedData', 'category'));
+        return view('Template::plan.show', compact('pageTitle', 'plans', 'validatedData', 'category', 'mobileCode', 'countries', 'quoteTopics'));
     }
 
     public function comparePlan(Request $request)
@@ -294,5 +306,20 @@ class SiteController extends Controller
 
         $notify[] = ['success', 'Quote request submitted successfully.'];
         return redirect()->back()->withNotify($notify);
+    }
+
+    public function detailPlans($id)
+    {
+        $quoteTopics = QuoteTopic::active()->with('quote')->orderBy('id', 'desc')->get();
+        $plan        = Plan::with(['features', 'notCovers' => function ($query) {
+            $query->active();
+        }])->findOrFail($id);
+
+        $info       = json_decode(json_encode(getIpInfo()), true);
+        $mobileCode = @implode(',', $info['code']);
+        $countries  = json_decode(file_get_contents(resource_path('views/partials/country.json')));
+
+        $pageTitle = $plan->name;
+        return view('Template::plan.detail', compact('plan', 'pageTitle', 'mobileCode', 'countries', 'quoteTopics'));
     }
 }

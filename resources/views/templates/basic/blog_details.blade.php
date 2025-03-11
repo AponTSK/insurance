@@ -74,7 +74,7 @@
                                         <a href="{{ route('blog.details', $blogElement->slug) }}"> <img src="{{ frontendImage('blog', 'thumb_' . @$blogElement->data_values->image) }}" class="fit-image" alt="image"></a>
                                     </div>
                                     <div class="latest-blog__content">
-                                        <h6 class="latest-blog__title"><a href="{{ route('blog.details', @$blogElement->slug) }}"> </a>{{ __($blogElement->data_values->title) }}</h6>
+                                        <h6 class="latest-blog__title"><a href="{{ route('blog.details', @$blogElement->slug) }}">{{ __($blogElement->data_values->title) }}</a></h6>
                                         <div class="latest-blog__bottom">
                                             <span class="title"> @lang('Published') </span>
                                             <ul class="text-list flex-align">
