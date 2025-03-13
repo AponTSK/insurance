@@ -50,13 +50,7 @@
     </div>
 </div>
 
-@push('style-lib')
-    <link rel="stylesheet" href="{{ asset($activeTemplateTrue . 'css/select2.min.css') }}">
-@endpush
 
-@push('script-lib')
-    <script src="{{ asset($activeTemplateTrue . 'js/select2.min.js') }}"></script>
-@endpush
 
 @push('script')
     <script>

@@ -29,8 +29,8 @@
 
     @stack('style')
 
-
-    {{-- <style>
+    {{--
+    <style>
         :root {
             --main: 115, 103, 240;
         }

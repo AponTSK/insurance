@@ -3,7 +3,9 @@ namespace App\Http\Controllers\User;
 
 use App\Constants\Status;
 use App\Http\Controllers\Controller;
+use App\Lib\FormProcessor;
 use App\Models\Category;
+use App\Models\Form;
 use App\Models\InsuredPlan;
 use App\Models\Plan;
 use App\Models\PolicyHolder;
@@ -14,8 +16,8 @@ class UserPlanController extends Controller
     public function showInsuranceInfo()
     {
         $pageTitle   = 'Insurance Plans';
-        $plans       = Plan::Active();
-        $categories  = Category::Active();
+        $plans       = Plan::Active()->get();
+        $categories  = Category::Active()->get();
         $maxChildren = $plans->max('no_children');
         $maxCoverage = $plans->max('coverage_amount');
 
@@ -45,11 +47,10 @@ class UserPlanController extends Controller
             return redirect()->back()->withNotify($notify);
         }
 
-        $insuredPlan                    = new InsuredPlan();
-        $insuredPlan->user_id           = auth()->id;
-        $insuredPlan->payment_status    = Status::PAYMENT_INITIATE;
-        $insuredPlan->category_id       = $request->category_id;
-        $insuredPlan->member_type       = $request->member_type;
+        $insuredPlan                 = new InsuredPlan();
+        $insuredPlan->user_id        = auth()->user()->id;
+        $insuredPlan->payment_status = Status::PAYMENT_INITIATE;
+        // $insuredPlan->member_type       = $request->member_type;
         $insuredPlan->coverage          = $request->coverage_amount === "all" ? $plan->coverage_amount : $request->coverage_amount;
         $insuredPlan->plan_id           = $plan->id;
         $insuredPlan->price             = $plan->price;
@@ -79,40 +80,28 @@ class UserPlanController extends Controller
     public function storeUserInfo(Request $request)
     {
         $request->validate([
-            'name'           => 'required|string|max:255',
-            'dob'            => 'required|date',
-            'gender'         => 'required|in:Male,Female',
-            'identification' => 'required|string|max:255',
-            'phone_number'   => 'required|string',
+            'name' => 'required|string|max:255',
+            'dob'  => 'required|date',
         ]);
 
-        $insuredPlan                 = new InsuredPlan();
-        $insuredPlan->user_id        = auth()->id;
-        $insuredPlan->payment_status = Status::PAYMENT_INITIATE;
-        $insuredPlan->name           = $request->name;
-        $insuredPlan->dob            = $request->dob;
-        $insuredPlan->gender         = $request->gender;
-        $insuredPlan->identification = $request->identification;
-        $insuredPlan->phone_number   = $request->phone_number;
-
-        $previousPlan = InsuredPlan::where('user_id', auth()->id)
+        $insuredPlan = InsuredPlan::where('user_id', auth()->user()->id)
             ->where('payment_status', Status::PAYMENT_INITIATE)
             ->latest()
             ->firstOrFail();
-        $insuredPlan->category_id       = $previousPlan->category_id;
-        $insuredPlan->member_type       = $previousPlan->member_type;
-        $insuredPlan->coverage          = $previousPlan->coverage;
-        $insuredPlan->plan_id           = $previousPlan->plan_id;
-        $insuredPlan->price             = $previousPlan->price;
-        $insuredPlan->renewal_date      = $previousPlan->renewal_date;
-        $insuredPlan->validity          = $previousPlan->validity;
-        $insuredPlan->spouse_coverage   = $previousPlan->spouse_coverage;
-        $insuredPlan->children_coverage = $previousPlan->children_coverage;
-        $insuredPlan->no_children       = $previousPlan->no_children;
-        $insuredPlan->policy_number     = '';
-        $insuredPlan->save();
 
-        $previousPlan->delete();
+        $selfHolder                   = new PolicyHolder();
+        $selfHolder->plan_purchase_id = $insuredPlan->id;
+        $selfHolder->type             = Status::SELF_INFO;
+        $selfHolder->name             = $request->name;
+        $selfHolder->age              = $this->calculateAge($request->dob);
+        $form                         = Form::where('act', 'user')->firstOrFail();
+        $formData                     = $form->form_data;
+        $formProcessor                = new FormProcessor();
+        $validationRule               = $formProcessor->valueValidation($formData);
+        $request->validate($validationRule);
+        $otherDetails              = $formProcessor->processFormData($request, $formData);
+        $selfHolder->other_details = $otherDetails;
+        $selfHolder->save();
 
         $notify[] = ['success', 'Your information saved successfully.'];
         return redirect()->route('user.spouse.info')->withNotify($notify);
@@ -121,56 +110,40 @@ class UserPlanController extends Controller
     public function showSpouseInfo()
     {
         $pageTitle   = 'Spouse Information';
-        $insuredPlan = InsuredPlan::where('user_id', auth()->id)
+        $insuredPlan = InsuredPlan::where('user_id', auth()->user()->id)
             ->where('payment_status', Status::PAYMENT_INITIATE)
             ->latest()
             ->firstOrFail();
 
-        return view('Template::user.plan_information.spouse_info', compact('insuredPlan', 'pageTitle'));
+        return view('Template::user.plan_information.spouse', compact('insuredPlan', 'pageTitle'));
     }
 
     public function storeSpouseInfo(Request $request)
     {
         $request->validate([
-            'spouse_name'           => 'nullable|string|max:255',
-            'spouse_dob'            => 'nullable|date',
-            'spouse_gender'         => 'nullable|in:Male,Female',
-            'spouse_identification' => 'nullable|string|max:255',
-            'spouse_phone_number'   => 'nullable|string|max:20',
+            'spouse_name' => 'nullable|string|max:255',
+            'spouse_dob'  => 'nullable|date',
         ]);
 
-        $insuredPlan                        = new InsuredPlan();
-        $insuredPlan->user_id               = auth()->id;
-        $insuredPlan->payment_status        = Status::PAYMENT_INITIATE;
-        $insuredPlan->spouse_name           = $request->spouse_name;
-        $insuredPlan->spouse_dob            = $request->spouse_dob;
-        $insuredPlan->spouse_gender         = $request->spouse_gender;
-        $insuredPlan->spouse_identification = $request->spouse_identification;
-        $insuredPlan->spouse_phone_number   = $request->spouse_phone_number;
-
-        $previousPlan = InsuredPlan::where('user_id', auth()->id)
+        $insuredPlan = InsuredPlan::where('user_id', auth()->user()->id)
             ->where('payment_status', Status::PAYMENT_INITIATE)
             ->latest()
             ->firstOrFail();
-        $insuredPlan->category_id       = $previousPlan->category_id;
-        $insuredPlan->member_type       = $previousPlan->member_type;
-        $insuredPlan->coverage          = $previousPlan->coverage;
-        $insuredPlan->plan_id           = $previousPlan->plan_id;
-        $insuredPlan->price             = $previousPlan->price;
-        $insuredPlan->renewal_date      = $previousPlan->renewal_date;
-        $insuredPlan->validity          = $previousPlan->validity;
-        $insuredPlan->spouse_coverage   = $previousPlan->spouse_coverage;
-        $insuredPlan->children_coverage = $previousPlan->children_coverage;
-        $insuredPlan->no_children       = $previousPlan->no_children;
-        $insuredPlan->name              = $previousPlan->name;
-        $insuredPlan->dob               = $previousPlan->dob;
-        $insuredPlan->gender            = $previousPlan->gender;
-        $insuredPlan->identification    = $previousPlan->identification;
-        $insuredPlan->phone_number      = $previousPlan->phone_number;
-        $insuredPlan->policy_number     = '';
-        $insuredPlan->save();
 
-        $previousPlan->delete();
+        $spouseHolder                   = new PolicyHolder();
+        $spouseHolder->plan_purchase_id = $insuredPlan->id;
+        $spouseHolder->type             = Status::SPOUSE_INFO;
+        $spouseHolder->name             = $request->name;
+        $spouseHolder->age              = $this->calculateAge($request->dob);
+        $form                           = Form::where('act', 'spouse')->firstOrFail();
+        $formData                       = $form->form_data;
+        $formProcessor                  = new FormProcessor();
+        $validationRule                 = $formProcessor->valueValidation($formData);
+        $request->validate($validationRule);
+        $otherDetails                = $formProcessor->processFormData($request, $formData);
+        $spouseHolder->other_details = $otherDetails;
+
+        $spouseHolder->save();
 
         $notify[] = ['success', 'Spouse information saved successfully.'];
         return redirect()->route('user.nominee.info')->withNotify($notify);
@@ -178,64 +151,41 @@ class UserPlanController extends Controller
 
     public function showNomineeInfo()
     {
-        $insuredPlan = InsuredPlan::where('user_id', auth()->id)
+        $insuredPlan = InsuredPlan::where('user_id', auth()->user()->id)
             ->where('payment_status', Status::PAYMENT_INITIATE)
             ->latest()
             ->firstOrFail();
         $pageTitle = 'Nominee Information';
 
-        return view('Template::user.plan_information.nominee_info', compact('insuredPlan', 'pageTitle'));
+        return view('Template::user.plan_information.nominee', compact('insuredPlan', 'pageTitle'));
     }
 
     public function storeNomineeInfo(Request $request)
     {
         $request->validate([
-            'nominee_relationship'   => 'nullable|string|max:255',
-            'nominee_name'           => 'nullable|string|max:255',
-            'nominee_dob'            => 'nullable|date',
-            'nominee_gender'         => 'nullable|in:Male,Female',
-            'nominee_identification' => 'nullable|string|max:255',
-            'nominee_phone_number'   => 'nullable|string|max:20',
+            'name' => 'nullable|string|max:255',
+            'dob'  => 'nullable|date',
         ]);
 
-        $insuredPlan                         = new InsuredPlan();
-        $insuredPlan->user_id                = auth()->id;
-        $insuredPlan->payment_status         = Status::PAYMENT_INITIATE;
-        $insuredPlan->nominee_relationship   = $request->nominee_relationship;
-        $insuredPlan->nominee_name           = $request->nominee_name;
-        $insuredPlan->nominee_dob            = $request->nominee_dob;
-        $insuredPlan->nominee_gender         = $request->nominee_gender;
-        $insuredPlan->nominee_identification = $request->nominee_identification;
-        $insuredPlan->nominee_phone_number   = $request->nominee_phone_number;
-
-        $previousPlan = InsuredPlan::where('user_id', auth()->id)
+        $insuredPlan = InsuredPlan::where('user_id', auth()->user()->id)
             ->where('payment_status', Status::PAYMENT_INITIATE)
             ->latest()
             ->firstOrFail();
-        $insuredPlan->category_id           = $previousPlan->category_id;
-        $insuredPlan->member_type           = $previousPlan->member_type;
-        $insuredPlan->coverage              = $previousPlan->coverage;
-        $insuredPlan->plan_id               = $previousPlan->plan_id;
-        $insuredPlan->price                 = $previousPlan->price;
-        $insuredPlan->renewal_date          = $previousPlan->renewal_date;
-        $insuredPlan->validity              = $previousPlan->validity;
-        $insuredPlan->spouse_coverage       = $previousPlan->spouse_coverage;
-        $insuredPlan->children_coverage     = $previousPlan->children_coverage;
-        $insuredPlan->no_children           = $previousPlan->no_children;
-        $insuredPlan->name                  = $previousPlan->name;
-        $insuredPlan->dob                   = $previousPlan->dob;
-        $insuredPlan->gender                = $previousPlan->gender;
-        $insuredPlan->identification        = $previousPlan->identification;
-        $insuredPlan->phone_number          = $previousPlan->phone_number;
-        $insuredPlan->spouse_name           = $previousPlan->spouse_name;
-        $insuredPlan->spouse_dob            = $previousPlan->spouse_dob;
-        $insuredPlan->spouse_gender         = $previousPlan->spouse_gender;
-        $insuredPlan->spouse_identification = $previousPlan->spouse_identification;
-        $insuredPlan->spouse_phone_number   = $previousPlan->spouse_phone_number;
-        $insuredPlan->policy_number         = '';
-        $insuredPlan->save();
 
-        $previousPlan->delete();
+        $nomineeHolder                   = new PolicyHolder();
+        $nomineeHolder->plan_purchase_id = $insuredPlan->id;
+        $nomineeHolder->type             = Status::NOMINEE_INFO;
+        $nomineeHolder->name             = $request->name;
+        $nomineeHolder->age              = $this->calculateAge($request->dob);
+        $form                            = Form::where('act', 'nominee')->firstOrFail();
+        $formData                        = $form->form_data;
+        $formProcessor                   = new FormProcessor();
+        $validationRule                  = $formProcessor->valueValidation($formData);
+        $request->validate($validationRule);
+        $otherDetails                 = $formProcessor->processFormData($request, $formData);
+        $nomineeHolder->other_details = $otherDetails;
+
+        $nomineeHolder->save();
 
         $notify[] = ['success', 'Nominee information saved successfully.'];
         return redirect()->route('user.declaration')->withNotify($notify);
@@ -244,7 +194,7 @@ class UserPlanController extends Controller
     public function showDeclaration()
     {
         $pageTitle   = 'Declaration';
-        $insuredPlan = InsuredPlan::where('user_id', auth()->id)
+        $insuredPlan = InsuredPlan::where('user_id', auth()->user()->id)
             ->where('payment_status', Status::PAYMENT_INITIATE)
             ->latest()
             ->firstOrFail();
@@ -258,7 +208,7 @@ class UserPlanController extends Controller
         $insuredPlan->user_id        = auth()->id;
         $insuredPlan->payment_status = Status::PAYMENT_INITIATE;
 
-        $previousPlan = InsuredPlan::where('user_id', auth()->id)
+        $previousPlan = InsuredPlan::where('user_id', auth()->user()->id)
             ->where('payment_status', Status::PAYMENT_INITIATE)
             ->latest()
             ->firstOrFail();
@@ -328,50 +278,50 @@ class UserPlanController extends Controller
         return redirect()->route('user.home')->withNotify($notify);
     }
 
-    private function savePolicyHolders(InsuredPlan $insuredPlan)
-    {
-        $selfHolder                   = new PolicyHolder();
-        $selfHolder->plan_purchase_id = $insuredPlan->id;
-        $selfHolder->type             = Status::SELF_INFO;
-        $selfHolder->name             = $insuredPlan->name;
-        $selfHolder->age              = $this->calculateAge($insuredPlan->dob);
-        $selfHolder->other_details    = //viserform
-        $selfHolder->save();
+    // private function savePolicyHolders(InsuredPlan $insuredPlan)
+    // {
+    //     $selfHolder                   = new PolicyHolder();
+    //     $selfHolder->plan_purchase_id = $insuredPlan->id;
+    //     $selfHolder->type             = Status::SELF_INFO;
+    //     $selfHolder->name             = $insuredPlan->name;
+    //     $selfHolder->age              = $this->calculateAge($insuredPlan->dob);
+    //     $selfHolder->other_details    = //viserform
+    //     $selfHolder->save();
 
-        if ($insuredPlan->spouse_name) {
-            $spouseHolder                   = new PolicyHolder();
-            $spouseHolder->plan_purchase_id = $insuredPlan->id;
-            $spouseHolder->type             = Status::SPOUSE_INFO;
-            $spouseHolder->name             = $insuredPlan->spouse_name;
-            $spouseHolder->age              = $this->calculateAge($insuredPlan->spouse_dob);
-            $spouseHolder->other_details    = //visreform
-            $spouseHolder->save();
-        }
+    //     if ($insuredPlan->spouse_name) {
+    //         $spouseHolder                   = new PolicyHolder();
+    //         $spouseHolder->plan_purchase_id = $insuredPlan->id;
+    //         $spouseHolder->type             = Status::SPOUSE_INFO;
+    //         $spouseHolder->name             = $insuredPlan->spouse_name;
+    //         $spouseHolder->age              = $this->calculateAge($insuredPlan->spouse_dob);
+    //         $spouseHolder->other_details    = //visreform
+    //         $spouseHolder->save();
+    //     }
 
-        if ($insuredPlan->nominee_name) {
-            $nomineeHolder                   = new PolicyHolder();
-            $nomineeHolder->plan_purchase_id = $insuredPlan->id;
-            $nomineeHolder->type             = Status::NOMINEE_INFO;
-            $nomineeHolder->name             = $insuredPlan->nominee_name;
-            $nomineeHolder->age              = $this->calculateAge($insuredPlan->nominee_dob);
-            $nomineeHolder->other_details    = //visreform
-            $nomineeHolder->save();
-        }
+    //     if ($insuredPlan->nominee_name) {
+    //         $nomineeHolder                   = new PolicyHolder();
+    //         $nomineeHolder->plan_purchase_id = $insuredPlan->id;
+    //         $nomineeHolder->type             = Status::NOMINEE_INFO;
+    //         $nomineeHolder->name             = $insuredPlan->nominee_name;
+    //         $nomineeHolder->age              = $this->calculateAge($insuredPlan->nominee_dob);
+    //         $nomineeHolder->other_details    = //visreform
+    //         $nomineeHolder->save();
+    //     }
 
-        // if ($insuredPlan->children_coverage && $insuredPlan->no_children > 0) {
-        //     for ($i = 1; $i <= $insuredPlan->no_children; $i++) {
-        //         $childHolder = new PolicyHolder();
-        //         $childHolder->plan_purchase_id = $insuredPlan->id;
-        //         $childHolder->type = Status::CHILDREN_INFO;
-        //         $childHolder->name = "Child " . $i;
-        //         $childHolder->age = '';
-        //         $childHolder->other_details = json_encode([
-        //             ''
-        //         ]);
-        //         $childHolder->save();
-        //     }
-        // }
-    }
+    //     // if ($insuredPlan->children_coverage && $insuredPlan->no_children > 0) {
+    //     //     for ($i = 1; $i <= $insuredPlan->no_children; $i++) {
+    //     //         $childHolder = new PolicyHolder();
+    //     //         $childHolder->plan_purchase_id = $insuredPlan->id;
+    //     //         $childHolder->type = Status::CHILDREN_INFO;
+    //     //         $childHolder->name = "Child " . $i;
+    //     //         $childHolder->age = '';
+    //     //         $childHolder->other_details = json_encode([
+    //     //             ''
+    //     //         ]);
+    //     //         $childHolder->save();
+    //     //     }
+    //     // }
+    // }
 
     private function calculateAge($dob)
     {

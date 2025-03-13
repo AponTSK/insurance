@@ -5,7 +5,7 @@
 <header class="header" id="header">
     <div class="container">
         <nav class="navbar navbar-expand-xl navbar-light">
-            <a class="navbar-brand logo" href="{{ route('home') }}">
+            <a class="navbar-brand logo" href="{{ route('user.home') }}">
                 <img src="{{ siteLogo('dark') }}" alt="logo">
             </a>
             <button class="navbar-toggler header-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
@@ -50,10 +50,14 @@
                         </li>
                         <li class="nav-item d-xl-none d-block">
                             <div class="account-btn-groups d-flex justify-content-between gap-2 align-items-center">
-                                <a href="{{ route('user.login') }}" class="btn btn--white"> @lang('Log In') </a>
-                                <a href="{{ route('user.register') }}" class="btn btn--base">
-                                    @lang('Register Now')
-                                </a>
+                                @auth
+                                    <a href="{{ route('user.home') }}" class="btn btn--base">@lang('Dashboard')</a>
+                                @else
+                                    <a href="{{ route('user.login') }}" class="btn btn--white"> @lang('Log In') </a>
+                                    <a href="{{ route('user.register') }}" class="btn btn--base">
+                                        @lang('Register Now')
+                                    </a>
+                                @endauth
                                 <div class="dropdown lang-box">
                                     @if (gs('multi_language'))
                                         @php
@@ -124,10 +128,14 @@
                         </ul>
                     @endif
                 </div>
-                <a href="{{ route('user.login') }}" class="btn btn--white"> @lang('Log In') </a>
-                <a href="{{ route('user.register') }}" class="btn btn--base">
-                    @lang('Register Now')
-                </a>
+                @auth
+                    <a href="{{ route('user.home') }}" class="btn btn--base">@lang('Dashboard')</a>
+                @else
+                    <a href="{{ route('user.login') }}" class="btn btn--white"> @lang('Log In') </a>
+                    <a href="{{ route('user.register') }}" class="btn btn--base">
+                        @lang('Register Now')
+                    </a>
+                @endauth
             </div>
         </nav>
     </div>

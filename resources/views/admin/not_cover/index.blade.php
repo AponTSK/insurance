@@ -10,6 +10,7 @@
                             <thead>
                                 <tr>
                                     <th>@lang('Title')</th>
+                                    <th>@lang('Status')</th>
                                     <th>@lang('Action')</th>
                                 </tr>
                             </thead>
@@ -17,8 +18,11 @@
                                 @forelse ($notCovers as $notCover)
                                     <tr>
                                         <td>{{ __($notCover->title) }}</td>
+                                        <td>
+                                            @php echo $notCover->statusBadge; @endphp
+                                        </td>
                                         <td class="button--group">
-                                            <button type="button" class="btn btn-outline--primary btn-sm edit-notCover-btn" data-notCover='@json($notCover)'>
+                                            <button type="button" class="btn btn-outline--primary btn-sm edit-notCover-btn" data-not_cover='@json($notCover)'>
                                                 <i class="las la-pen"></i>@lang('Edit')
                                             </button>
                                             @if ($notCover->status == Status::DISABLE)
@@ -105,7 +109,7 @@
             });
 
             $('.edit-notCover-btn').on('click', function() {
-                const notCover = $(this).data('notCover');
+                const notCover = $(this).data('not_cover');
                 notCoverModal.find('.modal-title').text('@lang('Edit Not Cover')');
                 notCoverForm.attr('action', "{{ route('admin.notcover.save', '') }}/" + notCover.id);
                 notCoverModal.find('input[name=title]').val(notCover.title);

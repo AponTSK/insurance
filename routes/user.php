@@ -95,7 +95,7 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::get('/insurance-info', 'showInsuranceInfo')->name('insurance.info');
                 Route::post('/store-insurance-info', 'storeInsuranceInfo')->name('store.insurance.info');
                 Route::get('/user-info', 'showUserInfo')->name('info');
-                Route::get('/store-user-info', 'storeUserInfo')->name('store.user.info');
+                Route::post('/store-user-info', 'storeUserInfo')->name('store.info');
                 Route::get('/spouse-info', 'showSpouseInfo')->name('spouse.info');
                 Route::post('/store-spouse-info', 'storeSpouseInfo')->name('store.spouse.info');
                 Route::get('/nominee-info', 'showNomineeInfo')->name('nominee.info');
@@ -103,7 +103,16 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::get('/declaration', 'showDeclaration')->name('declaration');
                 Route::get('/payment-info', 'showPaymentInfo')->name('payment.info');
                 Route::post('/store-payment-info', 'storePaymentInfo')->name('store.payment.info');
+            });
 
+            Route::controller('UserSettingController')->group(function () {
+                Route::get('setting', 'setting')->name('setting');
+                Route::post('setting', 'submitSetting');
+                Route::get('notification', 'notificationSetting')->name('notification.setting');
+                Route::post('notification', 'submitNotification');
+                Route::get('privacy', 'privacy')->name('privacy.setting');
+                Route::post('privacy', 'submitPrivacy');
+                Route::get('support', 'support')->name('support.setting');
             });
         });
 

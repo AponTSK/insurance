@@ -21,8 +21,7 @@
                 <p class="section-heading__desc">@lang('Choose the best :category Plan', ['category' => $category->name])</p>
 
             </div>
-            <form action="{{ route('show.plan') }}" method="POST">
-                @csrf
+            <form action="{{ route('show.plan') }}" method="get">
                 <input type="hidden" name="category_id" value="{{ $category->id }}">
                 <div class="row gy-4">
                     <div class="col-lg-6">
@@ -52,7 +51,7 @@
                                     </div>
                                     <input type="hidden" name="mobile_code">
                                     <input type="hidden" name="country_code">
-                                    <input type="text" class="form-control form--control phone-number" name="mobile" required>
+                                    <input type="number" value="{{ old('mobile') }}" class="form-control form--control checkUser" name="mobile" required>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -121,14 +120,6 @@
     </div>
     @include($activeTemplate . 'sections.faq')
 @endsection
-
-@push('style-lib')
-    <link rel="stylesheet" href="{{ asset('assets/global/css/select2.min.css') }}">
-@endpush
-
-@push('script-lib')
-    <script src="{{ asset('assets/global/js/select2.min.js') }}"></script>
-@endpush
 
 @push('script')
     <script>

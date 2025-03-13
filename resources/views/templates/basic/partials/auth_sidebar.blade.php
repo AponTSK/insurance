@@ -15,11 +15,11 @@
         <!-- ========= Sidebar Menu Start ================ -->
         <ul class="sidebar-menu-list">
             <li class="sidebar-menu-list__item">
-                <a href="dashboard.html" class="sidebar-menu-list__link">
+                <a href="{{ route('user.home') }}" class="sidebar-menu-list__link">
                     <span class="icon">
                         <i class="fa-solid fa-border-all"></i>
                     </span>
-                    <span class="text"> Dashboard </span>
+                    <span class="text"> @lang('Dashboard') </span>
                 </a>
             </li>
 
@@ -28,7 +28,7 @@
                     <span class="icon">
                         <i class="fa-solid fa-bars-progress"></i>
                     </span>
-                    <span class="text"> Inbox </span>
+                    <span class="text"> @lang('Inbox') </span>
                 </a>
                 <div class="sidebar-submenu">
                     <ul class="sidebar-submenu-list">
@@ -48,18 +48,18 @@
             <li class="sidebar-menu-list__item has-dropdown">
                 <a href="javascript:void(0)" class="sidebar-menu-list__link">
                     <span class="icon"> <i class="fa-solid fa-user"></i></span>
-                    <span class="text"> My Policies </span>
+                    <span class="text"> @lang('My Policies') </span>
                 </a>
                 <div class="sidebar-submenu">
                     <ul class="sidebar-submenu-list">
                         <li class="sidebar-submenu-list__item">
                             <a href="dashboard-policy.html" class="sidebar-submenu-list__link">
-                                <span class="text"> policy one </span>
+                                <span class="text"> @lang('policy one') </span>
                             </a>
                         </li>
                         <li class="sidebar-submenu-list__item">
                             <a href="policy-details.html" class="sidebar-submenu-list__link">
-                                <span class="text"> policy details </span>
+                                <span class="text"> @lang('policy details') </span>
                             </a>
                         </li>
                     </ul>
@@ -69,48 +69,48 @@
                 <a href="javascript:void(0)" class="sidebar-menu-list__link">
                     <span class="icon">
                         <i class="fa-solid fa-file-lines"></i></span>
-                    <span class="text"> Claims Center </span>
+                    <span class="text"> @lang('Claims Center') </span>
                 </a>
                 <div class="sidebar-submenu">
                     <ul class="sidebar-submenu-list">
                         <li class="sidebar-submenu-list__item">
                             <a href="claim-insurance.html" class="sidebar-submenu-list__link">
-                                <span class="text"> Claim insurance </span>
+                                <span class="text"> @lang('Claim insurance') </span>
                             </a>
                         </li>
                         <li class="sidebar-submenu-list__item">
                             <a href="policy-insurance.html" class="sidebar-submenu-list__link">
-                                <span class="text"> policy insurance </span>
+                                <span class="text"> @lang('policy insurance') </span>
                             </a>
                         </li>
                         <li class="sidebar-submenu-list__item">
                             <a href="claim-details.html" class="sidebar-submenu-list__link">
-                                <span class="text"> Claim details </span>
+                                <span class="text"> @lang('Claim details') </span>
                             </a>
                         </li>
                     </ul>
                 </div>
             </li>
             <li class="sidebar-menu-list__item">
-                <a href="insurance-plan.html" class="sidebar-menu-list__link">
+                <a href="{{ route('user.insurance.info') }}" class="sidebar-menu-list__link">
                     <span class="icon">
                         <i class="fa-solid fa-list-check"></i>
                     </span>
-                    <span class="text"> Get a Insurance </span>
+                    <span class="text"> @lang('Get a Insurance') </span>
                 </a>
             </li>
             <li class="sidebar-menu-list__item">
-                <a href="setting.html" class="sidebar-menu-list__link">
+                <a href="{{ route('user.setting') }}" class="sidebar-menu-list__link">
                     <span class="icon"> <i class="fa-solid fa-gear"></i> </span>
-                    <span class="text"> Settings </span>
+                    <span class="text"> @lang('Settings') </span>
                 </a>
             </li>
             <li class="sidebar-menu-list__item">
-                <a href="#" class="sidebar-menu-list__link">
+                <a href="{{ route('ticket.open') }}" class="sidebar-menu-list__link">
                     <span class="icon">
                         <i class="fa-solid fa-circle-question"></i>
                     </span>
-                    <span class="text"> Support </span>
+                    <span class="text"> @lang('Support') </span>
                 </a>
             </li>
         </ul>

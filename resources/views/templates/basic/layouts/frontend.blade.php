@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{ asset($activeTemplateTrue . 'css/custom.css') }}">
     <link rel="stylesheet" href="{{ asset($activeTemplateTrue . 'css/main.css') }}">
     <link rel="stylesheet" href="{{ asset($activeTemplateTrue . 'css/main.css.map') }}">
-    <link rel="stylesheet" href="{{ asset($activeTemplateTrue . 'css/selet2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset($activeTemplateTrue . 'css/select2.min.css') }}">
 
     @stack('style-lib')
 

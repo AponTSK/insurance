@@ -11,7 +11,7 @@ class NotCoversController extends Controller
     {
         $pageTitle = 'Manage What Not Covers';
         $notCovers = NotCover::orderBy('id', 'desc')->paginate(getPaginate());
-        return view('admin.cover.index', compact('pageTitle', 'notCovers'));
+        return view('admin.not_cover.index', compact('pageTitle', 'notCovers'));
     }
     public function save(Request $request, $id = 0)
     {

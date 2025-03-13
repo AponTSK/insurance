@@ -88,6 +88,10 @@ class FileInfo
             'path' => 'assets/images/featureImage',
             'size' => '48x48',
         ];
+        $data['userProfile'] = [
+            'path' => 'assets/images/userProfile',
+            'size' => '180x180',
+        ];
         $data['pushConfig'] = [
             'path' => 'assets/admin',
         ];
