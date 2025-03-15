@@ -4,50 +4,55 @@
         <div class="row gy-4 justify-content-center">
             <div class="col-xl-4 col-sm-6">
                 <div class="dashboard-widget">
-                    <h4 class="dashboard-widget__titel">Policy Overview</h4>
+                    <h4 class="dashboard-widget__titel">@lang('Policy Overview')</h4>
                     <p class="dashboard-widget__text">
-                        Total Active Policies: 3
+                        @lang('Total Active Policies'): {{ @$activePolicy }}
                     </p>
-                    <p class="dashboard-widget__text">Upcoming Renewals:</p>
+                    <p class="dashboard-widget__text">@lang('Upcoming Renewals'):</p>
                     <p class="dashboard-widget__desc">
-                        Car Insurance - Due February 15, 2025
+                        @if ($nearestRenewalPlan)
+                            {{ $nearestRenewalPlan->plan->name ?? 'N/A' }} -
+                            @lang('Due') {{ showDateTime($nearestRenewalPlan->renewal_date, 'd M Y') }}
+                        @else
+                            @lang('No upcoming renewals')
+                        @endif
                     </p>
                     <div class="dashboard-widget__btn">
-                        <button class="btn btn--base">Renew Now</button>
+                        <button class="btn btn--base">@lang('Renew Now')</button>
                     </div>
                     <div class="dashboard-widget__shape">
-                        <img src="assets/images/shapes/ds-1.png" alt="" />
+                        <img src="{{ asset($activeTemplateTrue . 'images/ds-1.png') }}" alt="image">
                     </div>
                 </div>
             </div>
             <div class="col-xl-4 col-sm-6">
                 <div class="dashboard-widget">
-                    <h4 class="dashboard-widget__titel">Claims Summary</h4>
-                    <p class="dashboard-widget__text">Ongoing Claims: 1</p>
+                    <h4 class="dashboard-widget__titel">@lang('Claims Summary')</h4>
+                    <p class="dashboard-widget__text">@lang('Ongoing Claims'): 1</p>
                     <div class="dashboard-widget__btn">
-                        <button class="btn btn--base">Track Claims</button>
+                        <button class="btn btn--base">@lang('Track Claims')</button>
                     </div>
                     <div class="dashboard-widget__shape">
-                        <img src="assets/images/shapes/ds-1.png" alt="" />
+                        <img src="{{ asset($activeTemplateTrue . 'images/ds-1.png') }}" alt="image">
                     </div>
                 </div>
             </div>
             <div class="col-xl-4 col-sm-6">
                 <div class="dashboard-widget">
-                    <h4 class="dashboard-widget__titel">Quick Actions</h4>
+                    <h4 class="dashboard-widget__titel">@lang('Quick Actions')</h4>
                     <div class="dashboard-widget__btn-group">
                         <button type="button" class="btn btn--base btn--sm w-100">
-                            Renew Policy
+                            @lang('Renew Policy')
                         </button>
                         <button type="button" class="btn btn--base btn--sm w-100">
-                            Submit a Claims
+                            @lang('Submit a Claims')
                         </button>
                         <button type="button" class="btn btn--base btn--sm w-100">
-                            Download Documents
+                            @lang('Download Documents')
                         </button>
                     </div>
                     <div class="dashboard-widget__shape">
-                        <img src="assets/images/shapes/ds-1.png" alt="" />
+                        <img src="{{ asset($activeTemplateTrue . 'images/ds-1.png') }}" alt="image">
                     </div>
                 </div>
             </div>
@@ -80,14 +85,14 @@
                         <thead>
                             <tr>
                                 <th>
-                                    ID
+                                    @lang('ID')
                                     <span class="icon">
                                         <i class="las la-arrow-down"></i>
                                     </span>
                                 </th>
-                                <th>Policy Type</th>
-                                <th>Coverage</th>
-                                <th>Status</th>
+                                <th>@lang('Policy Type')</th>
+                                <th>@lang('Coverage')</th>
+                                <th>@lang('Status')</th>
                             </tr>
                         </thead>
                         <tbody>

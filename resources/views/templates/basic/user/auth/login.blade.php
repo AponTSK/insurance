@@ -19,13 +19,13 @@
                             <div class="row gy-4">
                                 <div class="col-sm-12">
                                     <label for="mail" class="form--label"> @lang('Username or Email') </label>
-                                    <input type="text" name="username" value="{{ old('username') }}" class="form-control form--control" placeholder="olivia@untitledui.com" id="mail" required>
+                                    <input type="text" name="username" value="{{ old('username') }}" class="form-control form--control" placeholder="example@site.com" id="mail" required>
                                 </div>
 
                                 <div class="col-sm-12">
                                     <label for="your-password" class="form--label"> @lang('Password') </label>
                                     <div class="position-relative">
-                                        <input id="your-password" type="password" class="form-control form--control form-two" value="Password" name="password" required>
+                                        <input id="your-password" type="password" class="form-control form--control form-two" placeholder="Password" value="" name="password" required>
                                         <span class="password-show-hide fa-solid fa-eye-slash toggle-password" id="#your-password"></span>
                                     </div>
                                 </div>

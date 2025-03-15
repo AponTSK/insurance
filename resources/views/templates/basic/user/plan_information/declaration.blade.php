@@ -1,8 +1,9 @@
 @extends($activeTemplate . 'layouts.master')
+
 @section('content')
     <div class="dashboard-body">
         <div class="insurance-plan-wrapper">
-            <x-plan-info />
+            <x-plan-info insuredPlanId="{{ $insuredPlan->id }}" />
             <div class="insurance-plan-wrapper__body">
                 <div class="row">
                     <div class="col-xxl-10">
@@ -10,30 +11,32 @@
                             <div class="col-xl-6">
                                 <div class="info-wrapper">
                                     <h6 class="info-wrapper__title">
-                                        Policy Information
+                                        @lang('Policy Information')
                                     </h6>
                                     <div class="info-card">
                                         <ul class="info-list">
                                             <li class="info-list__item">
                                                 <span class="info-list__title">
-                                                    Policy Name:
+                                                    @lang('Policy Name')
                                                 </span>
                                                 <span class="info-list__text">
-                                                    Life Insurance Policy
+                                                    {{ $insuredPlan->plan->name ?? 'N/A' }}
                                                 </span>
                                             </li>
                                             <li class="info-list__item">
                                                 <span class="info-list__title">
-                                                    Policy Duration:
+                                                    @lang('Policy Duration')
                                                 </span>
-                                                <span class="info-list__text"> 1 Year </span>
+                                                <span class="info-list__text">
+                                                    {{ $insuredPlan->validity }} @lang('Year', ['count' => $insuredPlan->validity], 'Years')
+                                                </span>
                                             </li>
                                             <li class="info-list__item">
                                                 <span class="info-list__title">
-                                                    Coverage Amount:
+                                                    @lang('Coverage Amount')
                                                 </span>
                                                 <span class="info-list__text">
-                                                    $250,000
+                                                    {{ showAmount($insuredPlan->coverage) }}
                                                 </span>
                                             </li>
                                         </ul>
@@ -45,159 +48,216 @@
                             <div class="info-main-container">
                                 <div class="info-wrapper">
                                     <h6 class="info-wrapper__title">
-                                        Insured Information
+                                        @lang('Insured Information')
                                     </h6>
                                     <div class="info-card">
                                         <ul class="info-list">
+                                            @php
+                                                $selfHolder = $insuredPlan->policyHolders->where('type', Status::SELF_INFO)->first();
+                                            @endphp
                                             <li class="info-list__item">
                                                 <span class="info-list__title">
-                                                    Insured:
+                                                    @lang('Insured')
                                                 </span>
                                                 <span class="info-list__text">
-                                                    Cameron Williamson
+                                                    {{ $selfHolder->name ?? 'N/A' }}
                                                 </span>
                                             </li>
                                             <li class="info-list__item">
                                                 <span class="info-list__title">
-                                                    NID Number:
+                                                    @lang('NID Number')
+                                                </span>
+                                                @if ($selfHolder->other_details)
+                                                    <span class="info-list__text">
+                                                        @foreach ($selfHolder->other_details as $val)
+                                                            @if ($val->name == 'NID')
+                                                                {{ __($val->value) }}
+                                                            @endif
+                                                        @endforeach
+                                                    </span>
+                                                @endif
+                                            </li>
+                                            <li class="info-list__item">
+                                                <span class="info-list__title">
+                                                    @lang('Phone Number')
+                                                </span>
+                                                @if ($selfHolder->other_details)
+                                                    <span class="info-list__text">
+                                                        @foreach ($selfHolder->other_details as $val)
+                                                            @if ($val->name == 'Phone Number')
+                                                                {{ __($val->value) }}
+                                                            @endif
+                                                        @endforeach
+                                                    </span>
+                                                @endif
+                                            </li>
+
+                                            <li class="info-list__item">
+                                                <span class="info-list__title">
+                                                    @lang('Date of Birth')
                                                 </span>
                                                 <span class="info-list__text">
-                                                    797675718879
+                                                    {{ $selfHolder->date_of_birth ?? 'N/A' }}
                                                 </span>
                                             </li>
                                             <li class="info-list__item">
                                                 <span class="info-list__title">
-                                                    Phone Number:
+                                                    @lang('Gender')
                                                 </span>
-                                                <span class="info-list__text">
-                                                    (319) 555-0115
-                                                </span>
-                                            </li>
-                                            <li class="info-list__item">
-                                                <span class="info-list__title">
-                                                    Issue Age:
-                                                </span>
-                                                <span class="info-list__text"> 40 </span>
-                                            </li>
-                                            <li class="info-list__item">
-                                                <span class="info-list__title">
-                                                    Date of Birth:
-                                                </span>
-                                                <span class="info-list__text">
-                                                    November 28, 1964
-                                                </span>
-                                            </li>
-                                            <li class="info-list__item">
-                                                <span class="info-list__title">
-                                                    Gender:
-                                                </span>
-                                                <span class="info-list__text"> Male </span>
+                                                @if ($selfHolder->other_details)
+                                                    <span class="info-list__text">
+                                                        @foreach ($selfHolder->other_details as $val)
+                                                            @if ($val->name == 'Gender')
+                                                                {{ __($val->value) }}
+                                                            @endif
+                                                        @endforeach
+                                                    </span>
+                                                @endif
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="info-wrapper">
                                     <h6 class="info-wrapper__title">
-                                        Spouse Information
+                                        @lang('Spouse Information')
                                     </h6>
                                     <div class="info-card">
                                         <ul class="info-list">
+                                            @php
+                                                $spouseHolder = $insuredPlan->policyHolders->where('type', Status::SPOUSE_INFO)->first();
+                                            @endphp
                                             <li class="info-list__item">
                                                 <span class="info-list__title">
-                                                    Insured:
+                                                    @lang('Insured')
                                                 </span>
                                                 <span class="info-list__text">
-                                                    Cameron Williamson
+                                                    {{ $spouseHolder->name ?? 'N/A' }}
                                                 </span>
                                             </li>
                                             <li class="info-list__item">
                                                 <span class="info-list__title">
-                                                    NID Number:
+                                                    @lang('NID Number')
+                                                </span>
+                                                @if ($spouseHolder->other_details)
+                                                    <span class="info-list__text">
+                                                        @foreach ($spouseHolder->other_details as $val)
+                                                            @if ($val->name == 'NID')
+                                                                {{ __($val->value) }}
+                                                            @endif
+                                                        @endforeach
+                                                    </span>
+                                                @endif
+                                            </li>
+                                            <li class="info-list__item">
+                                                <span class="info-list__title">
+                                                    @lang('Phone Number')
+                                                </span>
+                                                @if ($spouseHolder->other_details)
+                                                    <span class="info-list__text">
+                                                        @foreach ($spouseHolder->other_details as $val)
+                                                            @if ($val->name == 'Phone Number')
+                                                                {{ __($val->value) }}
+                                                            @endif
+                                                        @endforeach
+                                                    </span>
+                                                @endif
+                                            </li>
+
+                                            <li class="info-list__item">
+                                                <span class="info-list__title">
+                                                    @lang('Date of Birth')
                                                 </span>
                                                 <span class="info-list__text">
-                                                    797675718879
+                                                    {{ $spouseHolder->date_of_birth ?? 'N/A' }}
                                                 </span>
                                             </li>
                                             <li class="info-list__item">
                                                 <span class="info-list__title">
-                                                    Phone Number:
+                                                    @lang('Gender')
                                                 </span>
                                                 <span class="info-list__text">
-                                                    (319) 555-0115
+                                                    @if ($spouseHolder->other_details)
+                                                        <span class="info-list__text">
+                                                            @foreach ($spouseHolder->other_details as $val)
+                                                                @if ($val->name == 'Gender')
+                                                                    {{ __($val->value) }}
+                                                                @endif
+                                                            @endforeach
+                                                        </span>
+                                                    @endif
                                                 </span>
-                                            </li>
-                                            <li class="info-list__item">
-                                                <span class="info-list__title">
-                                                    Issue Age:
-                                                </span>
-                                                <span class="info-list__text"> 40 </span>
-                                            </li>
-                                            <li class="info-list__item">
-                                                <span class="info-list__title">
-                                                    Date of Birth:
-                                                </span>
-                                                <span class="info-list__text">
-                                                    November 28, 1964
-                                                </span>
-                                            </li>
-                                            <li class="info-list__item">
-                                                <span class="info-list__title">
-                                                    Gender:
-                                                </span>
-                                                <span class="info-list__text"> Male </span>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="info-wrapper">
                                     <h6 class="info-wrapper__title">
-                                        Nominee Information
+                                        @lang('Nominee Information')
                                     </h6>
                                     <div class="info-card">
                                         <ul class="info-list">
+                                            @php
+                                                $nomineeHolder = $insuredPlan->policyHolders->where('type', Status::NOMINEE_INFO)->first();
+                                            @endphp
                                             <li class="info-list__item">
                                                 <span class="info-list__title">
-                                                    Insured:
+                                                    @lang('Insured')
                                                 </span>
                                                 <span class="info-list__text">
-                                                    Cameron Williamson
+                                                    {{ $nomineeHolder->name ?? 'N/A' }}
                                                 </span>
                                             </li>
                                             <li class="info-list__item">
                                                 <span class="info-list__title">
-                                                    NID Number:
+                                                    @lang('NID Number')
                                                 </span>
                                                 <span class="info-list__text">
-                                                    797675718879
+                                                    @if ($nomineeHolder->other_details)
+                                                        <span class="info-list__text">
+                                                            @foreach ($nomineeHolder->other_details as $val)
+                                                                @if ($val->name == 'NID')
+                                                                    {{ __($val->value) }}
+                                                                @endif
+                                                            @endforeach
+                                                        </span>
+                                                    @endif
                                                 </span>
                                             </li>
                                             <li class="info-list__item">
                                                 <span class="info-list__title">
-                                                    Phone Number:
+                                                    @lang('Phone Number')
+                                                </span>
+                                                @if ($nomineeHolder->other_details)
+                                                    <span class="info-list__text">
+                                                        @foreach ($nomineeHolder->other_details as $val)
+                                                            @if ($val->name == 'Phone Number')
+                                                                {{ __($val->value) }}
+                                                            @endif
+                                                        @endforeach
+                                                    </span>
+                                                @endif
+                                            </li>
+                                            <li class="info-list__item">
+                                                <span class="info-list__title">
+                                                    @lang('Date of Birth')
                                                 </span>
                                                 <span class="info-list__text">
-                                                    (319) 555-0115
+                                                    {{ $nomineeHolder->date_of_birth ?? 'N/A' }}
                                                 </span>
                                             </li>
                                             <li class="info-list__item">
                                                 <span class="info-list__title">
-                                                    Issue Age:
+                                                    @lang('Gender')
                                                 </span>
-                                                <span class="info-list__text"> 40 </span>
-                                            </li>
-                                            <li class="info-list__item">
-                                                <span class="info-list__title">
-                                                    Date of Birth:
-                                                </span>
-                                                <span class="info-list__text">
-                                                    November 28, 1964
-                                                </span>
-                                            </li>
-                                            <li class="info-list__item">
-                                                <span class="info-list__title">
-                                                    Gender:
-                                                </span>
-                                                <span class="info-list__text"> Male </span>
+                                                @if ($nomineeHolder->other_details)
+                                                    <span class="info-list__text">
+                                                        @foreach ($nomineeHolder->other_details as $val)
+                                                            @if ($val->name == 'Gender')
+                                                                {{ __($val->value) }}
+                                                            @endif
+                                                        @endforeach
+                                                    </span>
+                                                @endif
                                             </li>
                                         </ul>
                                     </div>
@@ -205,13 +265,13 @@
                             </div>
                         </div>
                         <div class="btn--groups mt-4 d-flex flex-wrap gap-2">
-                            <button class="btn btn--base">
-                                Confirm & Payment
+                            <a href="{{ route('user.payment.info',$insuredPlan->id) }}" class="btn btn--base">
+                                @lang('Confirm & Payment')
                                 <span class="btn-icon">
                                     <i class="las la-angle-right"></i>
                                 </span>
-                            </button>
-                            <a href="#" class="btn btn--white"> Back </a>
+                            </a>
+                            <a href="{{ route('user.nominee.info', $insuredPlan->id) }}" class="btn btn--white"> @lang('Back') </a>
                         </div>
                     </div>
                 </div>

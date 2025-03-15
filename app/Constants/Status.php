@@ -52,4 +52,11 @@ class Status
     const CLAIM_SUCCESS  = 1;
     const CLAIM_PENDING  = 2;
     const CLAIM_REJECT   = 3;
+
+    const INSURANCE_STEP   = 1;
+    const YOUR_INFO_STEP   = 2;
+    const SPOUSE_STEP      = 3;
+    const NOMINEE_STEP     = 4;
+    const DECLARATION_STEP = 5;
+    const PAYMENT_STEP     = 6;
 }

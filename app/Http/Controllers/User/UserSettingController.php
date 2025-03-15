@@ -8,7 +8,8 @@ class UserSettingController extends Controller
     public function setting()
     {
         $pageTitle = "User Setting";
-        return view('Template::user.setting.index', compact('pageTitle'));
+        $user      = auth()->user();
+        return view('Template::user.setting.index', compact('pageTitle', 'user'));
     }
     public function notificationSetting()
     {

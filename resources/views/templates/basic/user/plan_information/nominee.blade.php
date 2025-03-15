@@ -2,25 +2,26 @@
 @section('content')
     <div class="dashboard-body">
         <div class="insurance-plan-wrapper">
-            <x-plan-info />
+            <x-plan-info insuredPlanId="{{ $insuredPlan->id }}" />
+
             <div class="insurance-plan-wrapper__body">
                 <div class="information-container">
                     <div class="row">
                         <div class="col-xl-9">
-                            <form action="{{ route('user.store.nominee.info') }}" method="POST">
+                            <form action="{{ route('user.store.nominee.info', $insuredPlan->id) }}" method="POST">
                                 @csrf
                                 <div class="row gy-4">
                                     <div class="col-sm-6">
-                                        <label for="name" class="form-label">
+                                        <label for="name" class="form--label">
                                             @lang('Nominee Name')
                                         </label>
-                                        <input type="text" name="name" class="form--control" placeholder="Cameron Williamson" id="name" />
+                                        <input type="text" name="name" class="form--control" value="{{ old('name', @$policyHolder->name) }}" placeholder="Cameron Williamson" id="name" />
                                     </div>
                                     <div class="col-sm-6">
-                                        <label for="date" class="form-label">
+                                        <label for="date" class="form--label">
                                             @lang('Date of Birthday')
                                         </label>
-                                        <input type="date" name="dob" class="form--control" id="date" />
+                                        <input type="date" name="date_of_birth" value="{{ @$policyHolder->date_of_birth }}" class="form--control" id="date" />
                                     </div>
                                     <x-viser-form identifier="act" identifierValue="nominee" />
 
@@ -32,7 +33,7 @@
                                                     <i class="las la-arrow-right"></i>
                                                 </span>
                                             </button>
-                                            <a href="#" class="btn btn--white"> @lang('Back') </a>
+                                            <a href="{{ route('user.spouse.info', $insuredPlan->id) }}" class="btn btn--white"> @lang('Back') </a>
                                         </div>
                                     </div>
                                 </div>

@@ -7,11 +7,11 @@
                 <div class="tab-pane fade show active" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
                     <div class="dashboard-body__top">
                         <div class="dashboard-body__left">
-                            <h4 class="title mb-0">Your Account Details</h4>
+                            <h4 class="title mb-0">@lang('Your Account Details')</h4>
                         </div>
                         <div class="dashboard-body__right">
-                            <button class="btn btn--white">Discard Changes</button>
-                            <button class="btn btn--base">Save Changes</button>
+                            <button class="btn btn--white">@lang('Discard Changes')</button>
+                            <button class="btn btn--base">@lang('Save Changes')</button>
                         </div>
                     </div>
                     <div class="information-container information-two">
@@ -21,34 +21,34 @@
                                     <div class="row gy-4">
                                         <div class="col-sm-6">
                                             <label for="name" class="form--label">
-                                                Your Name
+                                                @lang('Your Name')
                                             </label>
-                                            <input type="text" class="form--control" placeholder="Cameron Williamson" id="name" />
+                                            <input type="text" class="form--control" placeholder="Cameron Williamson" id="name" readonly value="{{ old('name', @$user->fullname) }}" />
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="date" class="form--label">
-                                                Date of Birthday
+                                                @lang('Date of Birth')
                                             </label>
                                             <input type="date" class="form--control" id="date" />
                                         </div>
                                         <div class="col-sm-6">
-                                            <label class="form--label"> Gender </label>
+                                            <label class="form--label"> @lang('Gender') </label>
                                             <select class="form-select form--control select2">
-                                                <option selected>Couple</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
+                                                <option selected>@lang('Select One')</option>
+                                                <option value="1">@lang('Male')</option>
+                                                <option value="2">@lang('Female')</option>
+                                                <option value="3">@lang('Other')</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="nid" class="form--label">
-                                                Identification Number (NID)
+                                                @lang('Identification Number (NID)')
                                             </label>
                                             <input type="number" class="form--control" placeholder="254879635825" id="nid" />
                                         </div>
                                         <div class="col-sm-6">
                                             <label class="form--label label-two">
-                                                Phone Number
+                                                @lang('Phone Number')
                                             </label>
                                             <div class="input-group">
                                                 <div class="input-group-text">
@@ -59,14 +59,14 @@
                                                         <option value="3">Three</option>
                                                     </select>
                                                 </div>
-                                                <input type="text" class="form-control form--control" placeholder="+1 (555) 000-0000" />
+                                                <input type="text" class="form-control form--control" placeholder="+1 (555) 000-0000" value="{{ old('mobile', @$user->mobile) }}" />
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="mail" class="form--label">
-                                                Email Address
+                                                @lang('Email Address')
                                             </label>
-                                            <input type="email" class="form--control" placeholder="olivia@untitledui.com" id="mail" />
+                                            <input type="email" class="form--control" placeholder="olivia@untitledui.com" value="{{ old('email', @$user->email) }}" id="mail" />
                                         </div>
                                     </div>
                                 </form>

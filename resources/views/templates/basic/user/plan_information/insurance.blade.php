@@ -20,18 +20,11 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <label class="form--label">@lang('Select Members')</label>
-                                        <select class="form-select form--control select2" id="member_type" name="member_type" required>
-                                            <option value="Single">@lang('Single')</option>
-                                            <option value="Couple">@lang('Couple')</option>
-                                            <option value="Family">@lang('Family')</option>
-                                        </select>
-                                    </div>
+
                                     <div class="col-sm-6">
                                         <label class="form--label">@lang('Coverage Amount')</label>
-                                        <select class="form-select form--control select2" id="coverage_amount" name="coverage_amount" required>
-                                            <option value="all">@lang('All Plans')</option>
+                                        <select class="form-select form--control select2" id="coverage_amount" name="plan_id" required>
+                                            <option>@lang('Select One')</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-12">
@@ -57,17 +50,17 @@
 
             $('#category_id').on('change', function() {
                 let categoryId = $(this).val();
-                $coverageSelect.empty().append('<option value="all">@lang('All Plans')</option>');
+                $coverageSelect.empty().append('<option>@lang('Select One')</option>');
 
                 if (categoryId) {
-                    let categoryPlans = plans.filter(plan => plan.category_id == categoryId);
-                    let uniqueCoverages = [...new Set(categoryPlans.map(plan => plan.coverage_amount))].sort((a, b) => a - b);
-
-                    uniqueCoverages.forEach(coverage => {
-                        $coverageSelect.append(`<option value="${coverage}">@lang('Up to') ${coverage}</option>`);
-                    });
+                    plans
+                        .filter(plan => plan.category_id == categoryId)
+                        .forEach(plan => {
+                            $coverageSelect.append(`<option value="${plan.id}">@lang('Up to') ${parseFloat(plan.coverage_amount).toFixed(2)}</option>`);
+                        });
                 }
             }).trigger('change');
+
         })(jQuery);
     </script>
 @endpush

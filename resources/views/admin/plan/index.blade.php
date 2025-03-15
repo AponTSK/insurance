@@ -55,9 +55,9 @@
                                         </td>
 
                                         <td class="button--group">
-                                            <button type="button" class="btn btn-outline--primary btn-sm edit-plan-btn" data-plan='@json($plan)'>
+                                            <a href="" class="btn btn-outline--primary btn-sm edit-plan-btn" data-plan='@json($plan)'>
                                                 <i class="las la-pen"></i>@lang('Edit')
-                                            </button>
+                                            </a>
 
                                             @if ($plan->status == Status::DISABLE)
                                                 <button type="button" class="btn btn-sm btn-outline--success confirmationBtn" data-action="{{ route('admin.plan.status', $plan->id) }}" data-question="@lang('Are you sure to enable this plan?')">
@@ -89,7 +89,7 @@
     </div>
     <x-confirmation-modal />
 
-    <div class="modal fade plan-modal" tabindex="-1" id="plan-modal" data-bs-keyboard="true">
+    {{-- <div class="modal fade plan-modal" tabindex="-1" id="plan-modal" data-bs-keyboard="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -201,13 +201,13 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> --}}
 @endsection
 
 @push('breadcrumb-plugins')
-    <button type="button" class="btn btn-outline--primary add-plan-btn btn-sm">
+    <a href="{{ route('admin.plan.create') }}" type="button" class="btn btn-outline--primary add-plan-btn btn-sm">
         <i class="las la-plus"></i>@lang('Add New')
-    </button>
+    </a>
 @endpush
 
 @push('style')
@@ -247,7 +247,7 @@
 
 
 
-@push('script')
+{{-- @push('script')
     <script>
         (function($) {
             "use strict";
@@ -295,4 +295,4 @@
             });
         })(jQuery);
     </script>
-@endpush
+@endpush --}}

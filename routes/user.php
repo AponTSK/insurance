@@ -83,7 +83,7 @@ Route::middleware('auth')->name('user.')->group(function () {
             // Withdraw
             Route::controller('WithdrawController')->prefix('withdraw')->name('withdraw')->group(function () {
                 Route::middleware('kyc')->group(function () {
-                    Route::get('/', 'withdrawMoney');
+                    Route::get('/', 'withdrawMoney')->name('.index');
                     Route::post('/', 'withdrawStore')->name('.money');
                     Route::get('preview', 'withdrawPreview')->name('.preview');
                     Route::post('preview', 'withdrawSubmit')->name('.submit');
@@ -92,17 +92,35 @@ Route::middleware('auth')->name('user.')->group(function () {
             });
 
             Route::controller('UserPlanController')->group(function () {
-                Route::get('/insurance-info', 'showInsuranceInfo')->name('insurance.info');
-                Route::post('/store-insurance-info', 'storeInsuranceInfo')->name('store.insurance.info');
-                Route::get('/user-info', 'showUserInfo')->name('info');
-                Route::post('/store-user-info', 'storeUserInfo')->name('store.info');
-                Route::get('/spouse-info', 'showSpouseInfo')->name('spouse.info');
-                Route::post('/store-spouse-info', 'storeSpouseInfo')->name('store.spouse.info');
-                Route::get('/nominee-info', 'showNomineeInfo')->name('nominee.info');
-                Route::post('/store-nominee-info', 'storeNomineeInfo')->name('store.nominee.info');
-                Route::get('/declaration', 'showDeclaration')->name('declaration');
-                Route::get('/payment-info', 'showPaymentInfo')->name('payment.info');
+                Route::get('/insurance-info/{id?}', 'showInsuranceInfo')->name('insurance.info');
+                Route::post('/store-insurance-info/{id?}', 'storeInsuranceInfo')->name('store.insurance.info');
+                Route::get('/user-info/{id?}', 'showUserInfo')->name('info');
+                Route::post('/store-user-info/{id?}', 'storeUserInfo')->name('store.info');
+                Route::get('/spouse-info/{id?}', 'showSpouseInfo')->name('spouse.info');
+                Route::post('/store-spouse-info/{id?}', 'storeSpouseInfo')->name('store.spouse.info');
+                Route::get('/nominee-info/{id?}', 'showNomineeInfo')->name('nominee.info');
+                Route::post('/store-nominee-info/{id?}', 'storeNomineeInfo')->name('store.nominee.info');
+                Route::get('/declaration/{id?}', 'showDeclaration')->name('declaration');
+                Route::get('/payment-info/{id}', 'showPaymentInfo')->name('payment.info');
                 Route::post('/store-payment-info', 'storePaymentInfo')->name('store.payment.info');
+                Route::get('/payment-success/{id}', 'paymentSuccess')->name('payment.success');
+                Route::get('insurance-download/{id}', 'insuranceDownload')->name('insurance.download');
+            });
+
+            Route::controller('UserPolicyController')->group(function () {
+                Route::get('policy-list', 'policyList')->name('policy.list');
+                Route::get('policy-details/{id}', 'policyDetails')->name('policy.details');
+                Route::get('policy-download/{id}', 'policyDownload')->name('policy.download');
+            });
+
+            Route::controller('UserPolicyClaimController')->name('claim.insurance.')->prefix('claim-insurance')->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('request', 'claimInsuranceRequest')->name('request');
+                Route::post('request-submit', 'claimRequestSubmit')->name('request.submit');
+                Route::get('accident-details/{id}', 'accidentDetails')->name('accident.details');
+                Route::post('accident-details-submit/{id}', 'accidentDetailsSubmit')->name('accident.details.submit');
+                Route::post('details/{id}', 'details')->name('details');
+                Route::get('history', 'history')->name('history');
             });
 
             Route::controller('UserSettingController')->group(function () {
@@ -119,7 +137,7 @@ Route::middleware('auth')->name('user.')->group(function () {
         // Payment
         Route::prefix('deposit')->name('deposit.')->controller('Gateway\PaymentController')->group(function () {
             Route::any('/', 'deposit')->name('index');
-            Route::post('insert', 'depositInsert')->name('insert');
+            Route::post('insert/{id?}', 'depositInsert')->name('insert');
             Route::get('confirm', 'depositConfirm')->name('confirm');
             Route::get('manual', 'manualDepositConfirm')->name('manual.confirm');
             Route::post('manual', 'manualDepositUpdate')->name('manual.update');

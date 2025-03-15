@@ -15,7 +15,9 @@
             <div class="user-info__right">
                 <div class="user-info__button">
                     <div class="user-info__thumb">
-                        <img class="fit-image" src="{{ getImage(getFilePath('userProfile') . '/' . auth()->user()->image) }}" alt="profile" />
+                        <img class="fit-image"
+                            src="{{ getImage(getFilePath('userProfile') . '/' . auth()->user()->image) }}"
+                            alt="profile" />
                     </div>
                     <div class="user-info__profile">
                         <p class="user-info__name">{{ auth()->user()->fullname }}</p>

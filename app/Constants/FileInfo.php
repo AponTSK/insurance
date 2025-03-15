@@ -95,6 +95,9 @@ class FileInfo
         $data['pushConfig'] = [
             'path' => 'assets/admin',
         ];
+        $data['claimAttachments'] = [
+            'path' => 'assets/images/claim_attachments',
+        ];
         return $data;
     }
 }

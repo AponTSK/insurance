@@ -7,7 +7,7 @@ class PolicyHolder extends Model
 {
 
     protected $casts = [
-        'other_details' => 'array',
+        'other_details' => 'object',
     ];
 
     public function insuredPlan()

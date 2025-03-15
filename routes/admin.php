@@ -92,6 +92,7 @@ Route::middleware('admin')->group(function () {
     // Plans
     Route::controller('PlanController')->prefix('plan')->name('plan.')->group(function () {
         Route::get('/', 'index')->name('index');
+        Route::get('/create', 'create')->name('create');
         Route::post('save/{id?}', 'save')->name('save');
         Route::post('status/{id}', 'toggleStatus')->name('status');
     });

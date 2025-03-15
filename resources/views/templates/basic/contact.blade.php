@@ -84,7 +84,6 @@
     @endif
 @endsection
 
-
 @push('style')
     <style>
         label.required:after {

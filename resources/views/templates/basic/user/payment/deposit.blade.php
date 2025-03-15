@@ -1,6 +1,6 @@
 @extends($activeTemplate . 'layouts.master')
 @section('content')
-    <div class="container ">
+    <div class="container py-5">
         <div class="row justify-content-center">
             <div class="col-lg-9">
                 <form action="{{ route('user.deposit.insert') }}" method="post" class="deposit-form">
@@ -9,27 +9,21 @@
                     <div class="gateway-card">
                         <div class="row justify-content-center gy-sm-4 gy-3">
                             <div class="col-12">
-                                <h5 class="payment-card-title">@lang('Deposit')</h5>
+                                <h5 class="payment-card-title text--base">@lang('Deposit')</h5>
                             </div>
                             <div class="col-lg-6">
                                 <div class="payment-system-list is-scrollable gateway-option-list">
                                     @foreach ($gatewayCurrency as $data)
-                                        <label for="{{ titleToKey($data->name) }}"
-                                            class="payment-item @if ($loop->index > 4) d-none @endif gateway-option">
+                                        <label for="{{ titleToKey($data->name) }}" class="payment-item @if ($loop->index > 4) d-none @endif gateway-option">
                                             <div class="payment-item__info">
                                                 <span class="payment-item__check"></span>
                                                 <span class="payment-item__name">{{ __($data->name) }}</span>
                                             </div>
                                             <div class="payment-item__thumb">
-                                                <img class="payment-item__thumb-img"
-                                                    src="{{ getImage(getFilePath('gateway') . '/' . $data->method->image) }}"
-                                                    alt="@lang('payment-thumb')">
+                                                <img class="payment-item__thumb-img" src="{{ getImage(getFilePath('gateway') . '/' . $data->method->image) }}" alt="@lang('payment-thumb')">
                                             </div>
-                                            <input class="payment-item__radio gateway-input" id="{{ titleToKey($data->name) }}" hidden
-                                                data-gateway='@json($data)' type="radio" name="gateway" value="{{ $data->method_code }}"
-                                                @checked(old('gateway',$loop->first) == $data->method_code)
-                                                data-min-amount="{{ showAmount($data->min_amount) }}"
-                                                data-max-amount="{{ showAmount($data->max_amount) }}">
+                                            <input class="payment-item__radio gateway-input" id="{{ titleToKey($data->name) }}" hidden data-gateway='@json($data)' type="radio" name="gateway"
+                                                value="{{ $data->method_code }}" @checked(old('gateway', $loop->first) == $data->method_code) data-min-amount="{{ showAmount($data->min_amount) }}" data-max-amount="{{ showAmount($data->max_amount) }}">
                                         </label>
                                     @endforeach
                                     @if ($gatewayCurrency->count() > 4)
@@ -49,8 +43,7 @@
                                         <div class="deposit-info__input">
                                             <div class="deposit-info__input-group input-group">
                                                 <span class="deposit-info__input-group-text">{{ gs('cur_sym') }}</span>
-                                                <input type="text" class="form-control form--control amount" name="amount"
-                                                    placeholder="@lang('00.00')" value="{{ old('amount') }}" autocomplete="off">
+                                                <input type="text" class="form-control form--control amount" name="amount" placeholder="@lang('00.00')" value="{{ old('amount') }}" autocomplete="off">
                                             </div>
                                         </div>
                                     </div>
@@ -69,8 +62,7 @@
                                     <div class="deposit-info">
                                         <div class="deposit-info__title">
                                             <p class="text has-icon">@lang('Processing Charge')
-                                                <span data-bs-toggle="tooltip" title="@lang('Processing charge for payment gateways')" class="proccessing-fee-info"><i
-                                                        class="las la-info-circle"></i> </span>
+                                                <span data-bs-toggle="tooltip" title="@lang('Processing charge for payment gateways')" class="proccessing-fee-info"><i class="las la-info-circle"></i> </span>
                                             </p>
                                         </div>
                                         <div class="deposit-info__input">
@@ -143,7 +135,7 @@
             $('.amount').on('input', function(e) {
                 amount = parseFloat($(this).val());
                 if (!amount) {
-                   amount = 0;
+                    amount = 0;
                 }
                 calculation();
             });

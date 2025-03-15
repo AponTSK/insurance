@@ -23,6 +23,22 @@ class PlanController extends Controller
         return view('admin.plan.index', compact('pageTitle', 'plans', 'categories', 'features', 'notCovers'));
     }
 
+    public function create()
+    {
+        $pageTitle  = 'Add New Plan';
+        $categories = Category::active()->get();
+        $features   = Feature::active()->get();
+        $notCovers  = NotCover::active()->get();
+        return view('admin.plan.create', compact('pageTitle', 'categories', 'features', 'notCovers'));
+    }
+    public function edit($id)
+    {
+        $pageTitle  = 'Edit Plan';
+        $plan       = Plan::active()->with(['features', 'notCovers'])->find($id);
+        $categories = Category::active()->get();
+        return view('admin.plan.create', compact('pageTitle', 'categories', 'plan'));
+    }
+
     public function save(request $request, $id = 0)
     {
         $request->validate([

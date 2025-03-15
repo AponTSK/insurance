@@ -20,20 +20,20 @@
                             @csrf
                             <div class="account-form">
                                 <div class="row gy-4">
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-6 form-group">
                                         <label for="name" class="form-label form--label"> @lang('First Name') </label>
                                         <input type="text" class="form-control form--control form-two" placeholder="Enter Name" id="name" name="firstname" value="{{ old('firstname') }}" required>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-6 form-group">
                                         <label for="name" class="form-label form--label"> @lang('last Name') </label>
                                         <input type="text" class="form-control form--control form-two" placeholder="Enter Name" id="name" name="lastname" value="{{ old('lastname') }}" required>
                                     </div>
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-12 form-group">
                                         <label for="email" class="form-label form--label"> @lang('Email') </label>
                                         <input type="email" class="form-control form--control form-two checkUser" placeholder="Email address" id="email" name="email" value="{{ old('email') }}" required>
                                     </div>
 
-                                    <div class="col-sm-12">
+                                    <div class="col-sm-12 form-group">
                                         <label class="form--label"> @lang('Phone Number') </label>
                                         <div class="input-group">
                                             <div class="input-group-text">
@@ -50,18 +50,18 @@
                                             <input type="text" class="form-control form--control phone-number" name="mobile" required>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-6 form-group">
                                         <label for="your-password" class="form-label form--label">@lang('Password')</label>
                                         <div class="position-relative">
-                                            <input id="your-password" type="password" class="form-control form--control form-two @if (gs('secure_password')) secure-password @endif" value="Password" name="password"
-                                                required>
+                                            <input id="your-password" type="password" class="form-control form--control form-two @if (gs('secure_password')) secure-password @endif" placeholder="Password"
+                                                name="password" required>
                                             <span class="password-show-hide fa-solid fa-eye-slash toggle-password" id="#your-password"></span>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-6 form-group">
                                         <label for="confirm-password" class="form--label">@lang('Confirm Password')</label>
                                         <div class="position-relative">
-                                            <input id="confirm-password" type="password" class="form-control form--control  form-two" value="Confirm Password" name="password_confirmation" required>
+                                            <input id="confirm-password" type="password" class="form-control form--control  form-two" placeholder="Confirm Password" name="password_confirmation" required>
                                             <div class="password-show-hide fa-solid fa-eye-slash toggle-password" id="#confirm-password"></div>
                                         </div>
                                     </div>
@@ -130,6 +130,19 @@
     @endif
 
 @endsection
+
+
+@push('style')
+    <style>
+        label.required:after {
+            content: '*';
+            color: #DC3545 !important;
+            margin-left: 2px;
+        }
+    </style>
+@endpush
+
+
 @if (gs('registration'))
 
     @push('style')

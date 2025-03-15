@@ -8,12 +8,16 @@ use Illuminate\View\Component;
 
 class PlanInfo extends Component
 {
+
+    public $insuredPlanId;
+
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($insuredPlanId=null)
     {
-        //
+
+        $this->insuredPlanId = $insuredPlanId;
     }
 
     /**
