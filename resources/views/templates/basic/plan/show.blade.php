@@ -20,10 +20,6 @@
             </div>
             <div class="plan-section__top">
                 <div class="insurance-info">
-                    <p class="insurance-info__title"> @lang('Insurance For') </p>
-                    <p class="insurance-info__text"> {{ $validatedData['member'] }} </p>
-                </div>
-                <div class="insurance-info">
                     <p class="insurance-info__title"> @lang('Insured Info') </p>
                     <p class="insurance-info__text"> {{ $validatedData['your_age'] }} @lang('Yrs'),
                         {{ $validatedData['spouse_age'] ?? 'N/A' }} @lang('Yrs'),

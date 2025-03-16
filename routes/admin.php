@@ -93,6 +93,7 @@ Route::middleware('admin')->group(function () {
     Route::controller('PlanController')->prefix('plan')->name('plan.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/create', 'create')->name('create');
+        Route::get('/edit/{id}', 'edit')->name('edit');
         Route::post('save/{id?}', 'save')->name('save');
         Route::post('status/{id}', 'toggleStatus')->name('status');
     });
@@ -185,6 +186,17 @@ Route::middleware('admin')->group(function () {
             Route::post('edit/{id}', 'update')->name('update');
             Route::post('status/{id}', 'status')->name('status');
         });
+    });
+
+    //policy claim
+    Route::controller('PolicyClaimConroller')->prefix('policyclaim')->name('policy.claim.')->group(function () {
+        Route::get('/pending/{user_id?}', 'pending')->name('pending');
+        Route::get('/details/{id}', 'details')->name('details');
+        Route::post('/approve', 'approve')->name('approve');
+        Route::post('/reject', 'reject')->name('reject');
+        Route::get('/accepted/{user_id?}', 'acceptedClaim')->name('accepted');
+        Route::get('/rejected/{user_id?}', 'rejectedClaim')->name('rejected');
+
     });
 
     // Report

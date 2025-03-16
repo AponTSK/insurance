@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                <div class="card-body p-2">
+                <div class="card-body p-3">
                     <form class="plan-form" method="POST" action="{{ route('admin.plan.save') }}" enctype="multipart/form-data">
                         @csrf
 
@@ -128,23 +128,6 @@
                 planForm.find('.plan-category').val('');
                 planForm.find('.plan-feature').val('');
                 planForm.find('.plan-notCover').val('');
-            });
-
-            $('.edit-plan-btn').on('click', function() {
-                const plan = $(this).data('plan');
-
-                planForm.attr('action', "{{ route('admin.plan.save', '') }}/" + plan.id);
-                planForm.find('input[name=name]').val(plan.name);
-                planForm.find('.plan-category').val(plan.category_id);
-                planForm.find('.plan-feature').val(plan.feature_id);
-                planForm.find('.plan-notCover').val(plan.not_cover_id);
-                planForm.find('input[name=price]').val(parseFloat(plan.price).toFixed(2));
-                planForm.find('input[name=payment_duration]').val(plan.payment_duration);
-                planForm.find('input[name=coverage_amount]').val(parseFloat(plan.coverage_amount).toFixed(2));
-                planForm.find('input[name=validity]').val(plan.validity);
-                planForm.find('.spouseCoverage').bootstrapToggle(plan.spouse_coverage == 1 ? 'on' : 'off');
-                planForm.find('.childrenCoverage').bootstrapToggle(plan.children_coverage == 1 ? 'on' : 'off');
-                planForm.find('.noChildren').val(plan.no_children).prop('disabled', plan.children_coverage != 1);
             });
 
             $('.childrenCoverage').on('change', function() {

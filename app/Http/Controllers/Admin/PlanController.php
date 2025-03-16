@@ -34,13 +34,17 @@ class PlanController extends Controller
     public function edit($id)
     {
         $pageTitle  = 'Edit Plan';
-        $plan       = Plan::active()->with(['features', 'notCovers'])->find($id);
+        $plan       = Plan::with(['features', 'notCovers'])->findOrFail($id);
         $categories = Category::active()->get();
-        return view('admin.plan.create', compact('pageTitle', 'categories', 'plan'));
+        $features   = Feature::active()->get();
+        $notCovers  = NotCover::active()->get();
+
+        return view('admin.plan.edit', compact('pageTitle', 'categories', 'plan', 'features', 'notCovers'));
     }
 
     public function save(request $request, $id = 0)
     {
+
         $request->validate([
             'category_id'       => 'required|exists:categories,id',
             'name'              => 'required|string|max:255|unique:plans,name,' . $id,

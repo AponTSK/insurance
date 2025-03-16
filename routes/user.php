@@ -111,15 +111,23 @@ Route::middleware('auth')->name('user.')->group(function () {
                 Route::get('policy-list', 'policyList')->name('policy.list');
                 Route::get('policy-details/{id}', 'policyDetails')->name('policy.details');
                 Route::get('policy-download/{id}', 'policyDownload')->name('policy.download');
+                Route::get('claim-list', 'claimList')->name('claim.list');
+                Route::get('claim-details/{id}', 'claimDetails')->name('claim.details');
+                Route::get('claim-download/{id}', 'claimDownload')->name('claim.download');
             });
 
             Route::controller('UserPolicyClaimController')->name('claim.insurance.')->prefix('claim-insurance')->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('request', 'claimInsuranceRequest')->name('request');
-                Route::post('request-submit', 'claimRequestSubmit')->name('request.submit');
-                Route::get('accident-details/{id}', 'accidentDetails')->name('accident.details');
+
+                Route::get('request/{id?}', 'claimInsuranceRequest')->name('request');
+                Route::post('request-submit/{id?}', 'claimRequestSubmit')->name('request.submit');
+                Route::get('accident-details/{id?}', 'accidentDetails')->name('accident.details');
                 Route::post('accident-details-submit/{id}', 'accidentDetailsSubmit')->name('accident.details.submit');
-                Route::post('details/{id}', 'details')->name('details');
+
+                Route::get('details-review/{id?}', 'detailsReview')->name('details.review');
+                Route::post('confirm-submit/{id?}', 'confirmSubmit')->name('confirm.submit');
+                Route::get('submit-successfull/{id}', 'submitSuccessfull')->name('submit.successfull');
+                Route::get('download-file/{id}', 'downloadFile')->name('download.file');
+                Route::get('claim-download/{id}', 'claimDownload')->name('pdf.download');
                 Route::get('history', 'history')->name('history');
             });
 

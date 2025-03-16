@@ -51,19 +51,19 @@
                 </a>
                 <div class="sidebar-submenu">
                     <ul class="sidebar-submenu-list {{ menuActive('user.claim.insurance*') }}">
-                        <li class="sidebar-submenu-list__item {{ menuActive('user.claim.insurance.index') }}">
-                            <a href="{{ route('user.claim.insurance.index') }}" class="sidebar-submenu-list__link">
+                        <li class="sidebar-submenu-list__item {{ menuActive('user.claim.insurance.request', @$claimId) }}">
+                            <a href="{{ route('user.claim.insurance.request', @$claimId) }}" class="sidebar-submenu-list__link">
                                 <span class="text"> @lang('Claim insurance') </span>
                             </a>
                         </li>
                         <li class="sidebar-submenu-list__item">
-                            <a href="policy-insurance.html" class="sidebar-submenu-list__link">
+                            <a href="" class="sidebar-submenu-list__link">
                                 <span class="text"> @lang('policy insurance') </span>
                             </a>
                         </li>
-                        <li class="sidebar-submenu-list__item">
-                            <a href="claim-details.html" class="sidebar-submenu-list__link">
-                                <span class="text"> @lang('Claim details') </span>
+                        <li class="sidebar-submenu-list__item {{ menuActive('user.claim.list', @$claimId) }}">
+                            <a href="{{ route('user.claim.list') }}" class="sidebar-submenu-list__link">
+                                <span class="text"> @lang('Claim List') </span>
                             </a>
                         </li>
                     </ul>
@@ -77,7 +77,7 @@
                     <span class="text"> @lang('Get a Insurance') </span>
                 </a>
             </li>
-            {{-- <li class="sidebar-menu-list__item">
+            <li class="sidebar-menu-list__item">
                 <a href="{{ route('user.deposit.index') }}" class="sidebar-menu-list__link">
                     <span class="icon">
                         <i class="las la-money-check-alt"></i>
@@ -92,7 +92,7 @@
                     </span>
                     <span class="text"> @lang('Make Withdraw') </span>
                 </a>
-            </li> --}}
+            </li>
             <li class="sidebar-menu-list__item {{ menuActive('user.setting') }}">
                 <a href="{{ route('user.setting') }}" class="sidebar-menu-list__link">
                     <span class="icon"> <i class="fa-solid fa-gear"></i> </span>

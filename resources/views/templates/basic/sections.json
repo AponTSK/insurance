@@ -6,10 +6,10 @@
         "content": {
             "images": {
                 "banner_image": {
-                    "size": "470x545"
+                    "size": "940x1090"
                 },
                 "mini_image": {
-                    "size": "135x30"
+                    "size": "270x60"
                 }
             },
             "title": "text",
@@ -31,7 +31,7 @@
             "subheading": "text",
             "images": {
                 "quote_bg": {
-                    "size": "1905x450"
+                    "size": "3810x900"
                 }
             }
         }
@@ -49,7 +49,7 @@
         "element": {
             "images": {
                 "image": {
-                    "size": "420x180"
+                    "size": "840x360"
                 }
             },
             "title": "text",
@@ -67,7 +67,7 @@
         "element": {
             "images": {
                 "image": {
-                    "size": "160X45"
+                    "size": "320X90"
                 }
             },
             "modal": true
@@ -100,7 +100,7 @@
         "element": {
             "images": {
                 "image": {
-                    "size": "64x64"
+                    "size": "130x130"
                 }
             },
             "title": "text",
@@ -116,7 +116,7 @@
             "heading": "text",
             "images": {
                 "bg_image": {
-                    "size": "1905x480"
+                    "size": "3810x960"
                 }
             }
         },
@@ -148,7 +148,7 @@
         "element": {
             "images": {
                 "customer_image": {
-                    "size": "30x30"
+                    "size": "60x60"
                 }
             },
             "select": {
@@ -192,7 +192,7 @@
             "subheading": "text",
             "images": {
                 "image": {
-                    "size": "515x580"
+                    "size": "1030x1160"
                 }
             }
         }
@@ -203,16 +203,16 @@
         "content": {
             "images": {
                 "background_shape": {
-                    "size": "455x905"
+                    "size": "910x1810"
                 },
                 "feature_image": {
-                    "size": "40x40"
+                    "size": "80x80"
                 },
                 "plan_image_one": {
-                    "size": "35x35"
+                    "size": "70x70"
                 },
                 "plan_image_two": {
-                    "size": "40x40"
+                    "size": "80x80"
                 }
             },
             "feature_title": "text",
@@ -328,10 +328,10 @@
         "content": {
             "images": {
                 "background_image": {
-                    "size": "1905x355"
+                    "size": "3810x710"
                 },
                 "cta_image": {
-                    "size": "475x285"
+                    "size": "950x570"
                 }
             },
             "heading": "text",
@@ -383,7 +383,7 @@
         "content": {
             "images": {
                 "background_image": {
-                    "size": "1905x840"
+                    "size": "3810x1680"
                 }
             },
             "login_page_title": "text",

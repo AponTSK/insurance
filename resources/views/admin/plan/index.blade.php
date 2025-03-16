@@ -55,7 +55,7 @@
                                         </td>
 
                                         <td class="button--group">
-                                            <a href="" class="btn btn-outline--primary btn-sm edit-plan-btn" data-plan='@json($plan)'>
+                                            <a href="{{ route('admin.plan.edit', $plan->id) }}" class="btn btn-outline--primary btn-sm edit-plan-btn" data-plan='@json($plan)'>
                                                 <i class="las la-pen"></i>@lang('Edit')
                                             </a>
 

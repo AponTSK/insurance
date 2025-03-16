@@ -15,58 +15,59 @@
                 </div>
             </div>
             <div class="plan-info">
-                {{-- @include('Template::user.claim_insurance.claim_header') --}}
+                @include('Template::user.claim_insurance.claim_header', ['claimId' => @$claimRequest->id])
+
             </div>
             <div class="insurance-plan-wrapper__body">
                 <div class="information-container">
                     <div class="row">
                         <div class="col-xl-9">
-                            <form action="{{ route('user.claim.insurance.request.submit') }}" method="POST">
+                            <form action="{{ route('user.claim.insurance.request.submit', @$claimRequest->id) }}" method="POST">
                                 @csrf
                                 <div class="row gy-4">
                                     <div class="col-sm-6">
                                         <label for="name" class="form--label"> @lang('Your Name') </label>
-                                        <input type="text" class="form--control" placeholder="Cameron Williamson" id="name">
+                                        <input type="text" name="name" class="form--control" value="{{ auth()->user()->fullname }}" readonly placeholder="Cameron Williamson" id="name">
                                     </div>
                                     <div class="col-sm-6">
                                         <label for="date" class="form--label"> @lang('Date of Birthday') </label>
-                                        <input type="date" class="form--control" id="date">
+                                        <input type="date" name="dob" class="form--control" id="date">
                                     </div>
-                                    <div class="col-sm-6">
-                                        <label class="form--label"> @lang('Gender') </label>
-                                        <select class="form-select form--control select2">
-                                            <option selected> Couple </option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
-                                    </div>
+
                                     <div class="col-sm-6">
                                         <label for="nid" class="form--label"> @lang('Identification Number (NID)') </label>
-                                        <input type="number" class="form--control" placeholder="254879635825" id="nid">
+                                        <input type="number" name="nid" class="form--control" placeholder="254879635825" id="nid">
                                     </div>
+
+
                                     <div class="col-sm-6">
-                                        <label class="form--label  label-two"> @lang('Phone Number') </label>
+
+                                        <label class="form--label"> @lang('Phone Number') </label>
                                         <div class="input-group">
                                             <div class="input-group-text">
-                                                <select class="form-select form--control">
-                                                    <option selected=""> US</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
+                                                <select class="form-select form--control country-code" name="mobile_code">
+                                                    @foreach ($countries as $key => $country)
+                                                        <option value="{{ $country->dial_code }}" @if (auth()->user()->dial_code == $country->dial_code) selected @endif>
+                                                            +{{ $country->dial_code }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </div>
-                                            <input type="text" class="form-control form--control" placeholder="+1 (555) 000-0000">
+
+                                            <input type="number" value="{{ old('mobile', auth()->user()->mobile) }}" class="form-control form--control phone-number" name="mobile" required>
                                         </div>
+
                                     </div>
                                     <div class="col-sm-6">
                                         <label for="mail" class="form--label"> @lang('Email Address') </label>
-                                        <input type="email" class="form--control" placeholder="olivia@untitledui.com" id="mail">
+                                        <input type="email" name="email" class="form--control" value="{{ old('email', auth()->user()->email) }}" placeholder="olivia@untitledui.com" id="mail">
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="btn--groups">
-                                            <a href="{{ route('user.claim.insurance.request') }}" class="btn btn--base"> @lang('Next Step') <span class="btn-icon"> <i class="las la-arrow-right"></i> </span>
-                                            </a>
+                                            <button type="submit" class="btn btn--base">
+                                                @lang('Next Step') <span class="btn-icon"> <i class="las la-arrow-right"></i>
+                                                </span>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

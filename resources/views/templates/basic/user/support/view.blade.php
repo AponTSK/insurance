@@ -5,12 +5,12 @@
             <div class="col-md-12">
                 <div class="card custom--card">
                     <div class="card-header card-header-bg d-flex flex-wrap justify-content-between align-items-center">
-                        <h5 class="text-white mt-0">
+                        <h5 class="text--base mt-0">
                             @php echo $myTicket->statusBadge; @endphp
                             [@lang('Ticket')#{{ $myTicket->ticket }}] {{ $myTicket->subject }}
                         </h5>
                         @if ($myTicket->status != Status::TICKET_CLOSE && $myTicket->user)
-                            <button class="btn btn-danger close-button btn-sm confirmationBtn" type="button" data-question="@lang('Are you sure to close this ticket?')" data-action="{{ route('ticket.close', $myTicket->id) }}"><i
+                            <button class="btn btn-danger close-button btn--sm confirmationBtn" type="button" data-question="@lang('Are you sure to close this ticket?')" data-action="{{ route('ticket.close', $myTicket->id) }}"><i
                                     class="fas fa-lg fa-times-circle"></i>
                             </button>
                         @endif
@@ -50,7 +50,7 @@
                                         <h5 class="my-3">{{ $message->ticket->name }}</h5>
                                     </div>
                                     <div class="col-md-9">
-                                        <p class="text-muted fw-bold my-3">
+                                        <p class="text-muted fw-bold my-3 text--base">
                                             @lang('Posted on') {{ showDateTime($message->created_at, 'l, dS F Y @ h:i a') }}</p>
                                         <p>{{ $message->message }}</p>
                                         @if ($message->attachments->count() > 0)
@@ -66,10 +66,10 @@
                                 <div class="row border border-warning border-radius-3 my-3 py-3 mx-2 reply-bg">
                                     <div class="col-md-3 border-end text-end">
                                         <h5 class="my-3">{{ $message->admin->name }}</h5>
-                                        <p class="lead text-muted">@lang('Staff')</p>
+                                        <p class="lead text-muted text--base">@lang('Staff')</p>
                                     </div>
                                     <div class="col-md-9">
-                                        <p class="text-muted fw-bold my-3">
+                                        <p class="text-muted fw-bold my-3 text--primary">
                                             @lang('Posted on') {{ showDateTime($message->created_at, 'l, dS F Y @ h:i a') }}</p>
                                         <p>{{ $message->message }}</p>
                                         @if ($message->attachments->count() > 0)
@@ -127,7 +127,7 @@
                     <div class="col-lg-4 col-md-12 removeFileInput">
                         <div class="form-group">
                             <div class="input-group">
-                                <input type="file" name="attachments[]" class="form-control" accept=".jpeg,.jpg,.png,.pdf,.doc,.docx" required>
+                                <input type="file" name="attachments[]" class="form-control form--control" accept=".jpeg,.jpg,.png,.pdf,.doc,.docx" required>
                                 <button type="button" class="input-group-text removeFile bg--danger border--danger"><i class="fas fa-times"></i></button>
                             </div>
                         </div>

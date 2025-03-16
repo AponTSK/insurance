@@ -14,11 +14,11 @@
                                         <label for="name" class="form--label">
                                             @lang('Your Name')
                                         </label>
-                                        <input type="text" name="name" class="form--control" value="{{ old('name', @$policyHolder->name) }}" placeholder="Cameron Williamson" id="name" />
+                                        <input type="text" name="name" class="form--control" value="{{ auth()->user()->fullname }}" readonly placeholder="Cameron Williamson" id="name" />
                                     </div>
                                     <div class="col-sm-6">
                                         <label for="date" class="form--label">
-                                            @lang('Date of Birthday')
+                                            @lang('Date of Birth')
                                         </label>
                                         <input type="date" name="date_of_birth" value="{{ @$policyHolder->date_of_birth }}" class="form--control" id="date" />
                                     </div>

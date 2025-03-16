@@ -1,7 +1,6 @@
 @extends($activeTemplate . 'layouts.master')
 
 @section('content')
-    <!-- Dashboard Body End -->
     <div class="dashboard-body">
         <div class="dashboard-body__bar d-lg-none d-block">
             <span class="dashboard-body__bar-icon"><i class="fas fa-bars"></i></span>
@@ -15,7 +14,7 @@
                 </div>
             </div>
             <div class="plan-info">
-                {{-- @include('Template::user.claim_insurance.claim_header', ['claimId' => $claimRequest->id]) --}}
+                @include('Template::user.claim_insurance.claim_header', ['claimId' => $claimRequest->id])
             </div>
             <div class="insurance-plan-wrapper__body">
                 <div class="information-container">
@@ -23,12 +22,27 @@
                         <div class="col-xl-9">
                             <form action="{{ route('user.claim.insurance.accident.details.submit', $claimRequest->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                <x-viser-form identifier="act" identifierValue="claim" />
+
+
                                 <div class="single-claim-item">
                                     <div class="row gy-4">
                                         <div class="col-sm-6">
+                                            <label class="form--label"> @lang('Select Your Insurance') </label>
+                                            <select class="form-select form--control select2 insuredPlan" name="insured_id">
+                                                <option selected> @lang('Select One')</option>
+                                                @foreach ($insuredPlans as $insuredPlan)
+                                                    <option data-pol_id="{{ $insuredPlan->policy_number }}" value="{{ $insuredPlan->id }}">{{ $insuredPlan->plan->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label class="form--label"> @lang('Insurance ID')</label>
+                                            <input type="text" class="form--control insuranceId" readonly>
+                                        </div>
+                                        <x-viser-form identifier="act" identifierValue="claim" />
+                                        <div class="col-sm-6">
                                             <label for="amount" class="form--label"> @lang('Requested Amount') </label>
-                                            <input type="number" name="amount" class="form--control" placeholder="Health Insurance" id="amount">
+                                            <input type="number" name="amount" class="form--control" placeholder="10000" id="amount">
                                         </div>
                                         <div class="col-sm-6">
                                             <label for="date-two" class="form--label"> @lang('Accident Date') </label>
@@ -87,5 +101,12 @@
                 maxFiles: 5
             });
         });
+
+
+
+        $('.insuredPlan').on('change', function() {
+            let selectedPlan = $(this).find(':selected').data('pol_id');
+            $('.insuranceId').val(selectedPlan);
+        })
     </script>
 @endpush

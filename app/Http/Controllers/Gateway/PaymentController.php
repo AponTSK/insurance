@@ -190,10 +190,15 @@ class PaymentController extends Controller
                 $user->balance -= $deposit->amount;
                 $user->save();
 
+                do {
+                    $policyNumber = 'POL-' . now()->year . '-' . rand(0, 9999);
+                } while (InsuredPlan::where('policy_number', $policyNumber)->exists());
+
                 $insuredPlan                 = $deposit->insuredPlan;
                 $insuredPlan->payment_status = Status::PAYMENT_SUCCESS;
                 $insuredPlan->status         = Status::ENABLE;
-                $insuredPlan->policy_number  = 'POL-' . now()->year . '-' . rand(0, 9999);
+
+                $insuredPlan->policy_number = $policyNumber;
                 $insuredPlan->save();
 
                 $transaction               = new Transaction();

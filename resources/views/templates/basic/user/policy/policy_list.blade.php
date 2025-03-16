@@ -7,11 +7,11 @@
 
         <div class="dashboard-body__top">
             <div class="dashboard-body__left">
-                <h4 class="title mb-0"> @lang('Your Claims Overview') </h4>
-                <p class="text"> @lang('Track and manage all your submitted claims in one place.') </p>
+                <h4 class="title mb-0"> @lang('Your Policy Overview') </h4>
+                <p class="text"> @lang('Track and manage all your submitted policies in one place.') </p>
             </div>
             <div class="dashboard-body__right">
-                <button class="btn btn--base"> @lang('New Claim') </button>
+                <a href="{{ route('user.insurance.info') }}" class="btn btn--sm btn--base"> @lang('Get Insurance') </a>
             </div>
         </div>
         <div class="row gy-4 mt-1">

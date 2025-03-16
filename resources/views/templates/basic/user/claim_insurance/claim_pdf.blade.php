@@ -54,24 +54,28 @@
 <body>
 
     <div class="container">
-        <h2>@lang('Insurance Plan Details')</h2>
+        <h2>@lang('Insurance Plan Claim Details')</h2>
 
         <table>
             <tr>
                 <th>@lang('Plan Name')</th>
-                <td>{{ $insuredPlan->plan->name ?? 'N/A' }}</td>
+                <td>{{ $claimRequest->insuredPlan->plan->name ?? 'N/A' }}</td>
             </tr>
             <tr>
                 <th>@lang('Policy Number')</th>
-                <td>{{ $insuredPlan->policy_number ?? 'N/A' }}</td>
+                <td>#{{ $claimRequest->insuredPlan->policy_number ?? 'N/A' }}</td>
             </tr>
             <tr>
-                <th>@lang('Start Date')</th>
-                <td>{{ showDateTime($insuredPlan->created_at, 'd M y') }}</td>
+                <th>@lang('Claim Id')</th>
+                <td>#{{ $claimRequest->claim_id }}</td>
             </tr>
             <tr>
-                <th>@lang('Coverage Amount')</th>
-                <td>{{ showAmount($insuredPlan->coverage) }}</td>
+                <th>@lang('Submission Date')</th>
+                <td>{{ showDateTime($claimRequest->created_at, 'd M y') }}</td>
+            </tr>
+            <tr>
+                <th>@lang('Requested Amount')</th>
+                <td>{{ showAmount($claimRequest->request_amount) }}</td>
             </tr>
         </table>
 

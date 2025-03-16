@@ -3,7 +3,7 @@
         <div class="card-body">
             <div class="widget-card-inner">
                 <div class="widget-card bg--success">
-                    <a href="{{ url()->route('admin.withdraw.data.approved',request()->all()) }}" class="widget-card-link"></a>
+                    <a href="{{ url()->route('admin.withdraw.data.approved', request()->all()) }}" class="widget-card-link"></a>
                     <div class="widget-card-left">
                         <div class="widget-card-icon">
                             <i class="las la-check-circle"></i>
@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="widget-card bg--warning">
-                    <a href="{{ url()->route('admin.withdraw.data.pending',request()->all()) }}" class="widget-card-link"></a>
+                    <a href="{{ url()->route('admin.withdraw.data.pending', request()->all()) }}" class="widget-card-link"></a>
                     <div class="widget-card-left">
                         <div class="widget-card-icon">
                             <i class="fas fa-spinner"></i>
@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="widget-card bg--danger">
-                    <a href="{{ url()->route('admin.withdraw.data.rejected',request()->all()) }}" class="widget-card-link"></a>
+                    <a href="{{ url()->route('admin.withdraw.data.rejected', request()->all()) }}" class="widget-card-link"></a>
                     <div class="widget-card-left">
                         <div class="widget-card-icon">
                             <i class="fas fa-ban"></i>

@@ -28,9 +28,9 @@
             <div class="col-xl-4 col-sm-6">
                 <div class="dashboard-widget">
                     <h4 class="dashboard-widget__titel">@lang('Claims Summary')</h4>
-                    <p class="dashboard-widget__text">@lang('Ongoing Claims'): 1</p>
+                    <p class="dashboard-widget__text">@lang('Ongoing Claims'): {{ @$activeClaim }}</p>
                     <div class="dashboard-widget__btn">
-                        <button class="btn btn--base">@lang('Track Claims')</button>
+                        <a href="{{ route('user.claim.list') }}" class="btn btn--base">@lang('Track Claims')</a>
                     </div>
                     <div class="dashboard-widget__shape">
                         <img src="{{ asset($activeTemplateTrue . 'images/ds-1.png') }}" alt="image">
@@ -59,7 +59,7 @@
         </div>
         <!-- Dashboard Card End -->
 
-        <div class="row gy-4 mt-1">
+        {{-- <div class="row gy-4 mt-1">
             <div class="col-xl-5">
                 <div class="card custom--card">
                     <div class="card-body">
@@ -74,12 +74,12 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="row gy-4 mt-1">
             <div class="col-xxl-6">
                 <div class="dashboard-table">
                     <div class="dashboard-table__top">
-                        <h4 class="dashboard-table__title">Top Policy Summary</h4>
+                        <h4 class="dashboard-table__title">@lang('Top Policy Summary')</h4>
                     </div>
                     <table class="table table--responsive--lg">
                         <thead>
@@ -96,32 +96,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td data-label="ID">#95954</td>
-                                <td data-label="Policy Type">Home Insurance</td>
-                                <td data-label="Coverage">$ 2,000.00</td>
-                                <td data-label="Status">
-                                    <span class="badge badge--success">
-                                        <span class="badge__icop">
-                                            <i class="las la-check"></i>
-                                        </span>
-                                        Active
-                                    </span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td data-label="ID">#95954</td>
-                                <td data-label="Policy Type">Home Insurance</td>
-                                <td data-label="Coverage">$ 2,000.00</td>
-                                <td data-label="Status">
-                                    <span class="badge badge--success">
-                                        <span class="badge__icop">
-                                            <i class="las la-check"></i>
-                                        </span>
-                                        Active
-                                    </span>
-                                </td>
-                            </tr>
+                            @foreach ($insuredPlans as $insuredPlan)
+                                <tr>
+                                    <td data-label="ID">#{{ $insuredPlan->policy_number }}</td>
+                                    <td data-label="Policy Type">{{ $insuredPlan->plan->name ?? 'N/A' }}</td>
+                                    <td data-label="Coverage">{{ showAmount($insuredPlan->coverage) }}</td>
+                                    <td data-label="Status"> @php echo $insuredPlan->statusBadge @endphp</td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

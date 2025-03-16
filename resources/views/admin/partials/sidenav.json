@@ -371,61 +371,56 @@
     "claim_insurance": {
         "title": "Claim Insurance",
         "icon": "lab la-get-pocket",
-        "menu_active": "admin.report*",
+        "counters": ["pendingClaimCount"],
+        "menu_active": "admin.policy.claim*",
         "submenu": [
             {
                 "keyword": [
-                    "Transaction Log",
-                    "Report",
-                    "Transaction report",
-                    "Transaction history",
-                    "Transaction activity",
-                    "balance sheet",
-                    "balance log",
-                    "balance history"
+                    "Pending Claims",
+                    "Claim",
+                    "Claim management",
+                    "Claim control",
+                    "Claim status",
+                    "Claim activity",
+                    "Claim Report",
+                    "Claim transaction",
+                    "Claim transaction report"
                 ],
                 "title": "Pending Claim",
-                "route_name": "admin.report.transaction",
-                "menu_active": [
-                    "admin.report.transaction",
-                    "admin.report.transaction.search"
-                ],
+                "route_name": "admin.policy.claim.pending",
+                "counter": "pendingClaimCount",
+                "menu_active": ["admin.policy.claim.pending"],
                 "params": {
                     "user_id": ""
                 }
             },
             {
                 "keyword": [
-                    "Login History",
-                    "Report",
-                    "Login report",
-                    "Login history",
-                    "Login activity"
+                    "Accepted Claims",
+                    "Claim",
+                    "Claim management",
+                    "Claim activity",
+                    "Claim Report",
+                    "Claim transaction",
+                    "Claim transaction report"
                 ],
                 "title": "Accepted Claim",
-                "route_name": "admin.report.login.history",
-                "menu_active": [
-                    "admin.report.login.history",
-                    "admin.report.login.ipHistory"
-                ]
+                "route_name": "admin.policy.claim.accepted",
+                "menu_active": ["admin.policy.claim.accepted"]
             },
             {
                 "keyword": [
-                    "Notification History",
-                    "Report",
-                    "Notification report",
-                    "Notification history",
-                    "Notification activity",
-                    "email log",
-                    "email history",
-                    "sms log",
-                    "sms history",
-                    "push notification log",
-                    "push notification history"
+                    "Rejected Claims",
+                    "Claim",
+                    "Claim management",
+                    "Claim activity",
+                    "Claim Report",
+                    "Claim transaction",
+                    "Claim transaction report"
                 ],
                 "title": "Rejected Claim",
-                "route_name": "admin.report.notification.history",
-                "menu_active": "admin.report.notification.history"
+                "route_name": "admin.policy.claim.rejected",
+                "menu_active": "admin.policy.claim.rejected"
             }
         ]
     },

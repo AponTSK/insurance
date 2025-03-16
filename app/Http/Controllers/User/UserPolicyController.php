@@ -3,6 +3,7 @@ namespace App\Http\Controllers\User;
 
 use App\Constants\Status;
 use App\Http\Controllers\Controller;
+use App\Models\ClaimRequest;
 use App\Models\InsuredPlan;
 
 class UserPolicyController extends Controller
@@ -21,6 +22,17 @@ class UserPolicyController extends Controller
             ->get();
 
         return view('Template::user.policy.policy_list', compact('pageTitle', 'insuredPlans'));
+    }
+    public function claimList()
+    {
+        $pageTitle = 'Claim List';
+
+        $claimRequests = ClaimRequest::where('user_id', auth()->id())
+            ->latest()
+            ->with('insuredPlan.plan')
+            ->get();
+
+        return view('Template::user.policy.claim_list', compact('pageTitle', 'claimRequests'));
     }
 
 }

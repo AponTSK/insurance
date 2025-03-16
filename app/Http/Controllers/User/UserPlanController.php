@@ -56,7 +56,7 @@ class UserPlanController extends Controller
         $insuredPlan->children_coverage = $plan->children_coverage;
         $insuredPlan->no_children       = $plan->no_children;
         $insuredPlan->step              = Status::INSURANCE_STEP;
-        $insuredPlan->policy_number     = '';
+    
         $insuredPlan->save();
 
         $notify[] = ['success', 'Insurance information saved successfully.'];

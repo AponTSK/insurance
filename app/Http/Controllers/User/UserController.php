@@ -5,6 +5,7 @@ use App\Constants\Status;
 use App\Http\Controllers\Controller;
 use App\Lib\FormProcessor;
 use App\Lib\GoogleAuthenticator;
+use App\Models\ClaimRequest;
 use App\Models\DeviceToken;
 use App\Models\Form;
 use App\Models\InsuredPlan;
@@ -31,7 +32,19 @@ class UserController extends Controller
             ->orderBy('renewal_date', 'asc')
             ->first();
 
-        return view('Template::user.dashboard', compact('pageTitle', 'activePolicy', 'nearestRenewalPlan'));
+        $insuredPlans = InsuredPlan::where('user_id', auth()->id())
+            ->where('payment_status', Status::PAYMENT_SUCCESS)
+            ->with([
+                'plan',
+                'policyHolders',
+            ])
+            ->orderByDesc('coverage')
+            ->limit(3)
+            ->get();
+
+        $activeClaim = ClaimRequest::where('user_id', auth()->id())->where('status', Status::CLAIM_PENDING)->count();
+
+        return view('Template::user.dashboard', compact('pageTitle', 'activePolicy', 'nearestRenewalPlan', 'activeClaim', 'insuredPlans'));
     }
 
     public function depositHistory(Request $request)

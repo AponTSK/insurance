@@ -37,7 +37,7 @@
                             </div>
                             <div class="col-md-9">
                                 <button type="button" class="btn btn--dark addAttachment my-2"> <i class="fas fa-plus"></i> @lang('Add Attachment') </button>
-                                <p class="mb-2"><span class="text--info">@lang('Max 5 files can be uploaded | Maximum upload size is '.convertToReadableSize(ini_get('upload_max_filesize')) .' | Allowed File Extensions: .jpg, .jpeg, .png, .pdf, .doc, .docx')</span></p>
+                                <p class="mb-2"><span class="text--info">@lang('Max 5 files can be uploaded | Maximum upload size is ' . convertToReadableSize(ini_get('upload_max_filesize')) . ' | Allowed File Extensions: .jpg, .jpeg, .png, .pdf, .doc, .docx')</span></p>
                                 <div class="row fileUploadsContainer">
                                 </div>
                             </div>
@@ -61,7 +61,8 @@
                                     @else
                                         <p>@<span>{{ $ticket->name }}</span></p>
                                     @endif
-                                    <button class="btn btn--danger btn-sm my-3 confirmationBtn" data-question="@lang('Are you sure to delete this message?')" data-action="{{ route('admin.ticket.delete', $message->id) }}"><i class="la la-trash"></i> @lang('Delete')</button>
+                                    <button class="btn btn--danger btn-sm my-3 confirmationBtn" data-question="@lang('Are you sure to delete this message?')" data-action="{{ route('admin.ticket.delete', $message->id) }}"><i class="la la-trash"></i>
+                                        @lang('Delete')</button>
                                 </div>
 
                                 <div class="col-md-9">
@@ -83,7 +84,8 @@
                                 <div class="col-md-3 border-end text-md-end text-start">
                                     <h5 class="my-3">{{ @$message->admin->name }}</h5>
                                     <p class="lead text-muted">@lang('Staff')</p>
-                                    <button class="btn btn--danger btn-sm my-3 confirmationBtn" data-question="@lang('Are you sure to delete this message?')" data-action="{{ route('admin.ticket.delete', $message->id) }}"><i class="la la-trash"></i> @lang('Delete')</button>
+                                    <button class="btn btn--danger btn-sm my-3 confirmationBtn" data-question="@lang('Are you sure to delete this message?')" data-action="{{ route('admin.ticket.delete', $message->id) }}"><i class="la la-trash"></i>
+                                        @lang('Delete')</button>
                                 </div>
 
                                 <div class="col-md-9">
@@ -154,13 +156,13 @@
             $('.addAttachment').on('click', function() {
                 fileAdded++;
                 if (fileAdded == 5) {
-                    $(this).attr('disabled',true)
+                    $(this).attr('disabled', true)
                 }
                 $(".fileUploadsContainer").append(`
                 <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 removeFileInput">
                     <div class="form-group">
                         <div class="input-group">
-                            <input type="file" name="attachments[]" class="form-control" accept=".jpeg,.jpg,.png,.pdf,.doc,.docx" required>
+                            <input type="file" name="attachments[]" class="form-control form--control" accept=".jpeg,.jpg,.png,.pdf,.doc,.docx" required>
                             <button type="button" class="input-group-text removeFile bg--danger border--danger"><i class="fas fa-times"></i></button>
                         </div>
                     </div>
@@ -169,7 +171,7 @@
             });
 
             $(document).on('click', '.removeFile', function() {
-                $('.addAttachment').removeAttr('disabled',true)
+                $('.addAttachment').removeAttr('disabled', true)
                 fileAdded--;
                 $(this).closest('.removeFileInput').remove();
             });

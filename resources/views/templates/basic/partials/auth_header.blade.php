@@ -4,20 +4,12 @@
             <div class="dashboard-body__bar d-lg-none d-block">
                 <span class="dashboard-body__bar-icon"><i class="fas fa-bars"></i></span>
             </div>
-            <form action="#" class="search-form">
-                <span class="search-form__icon">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </span>
-                <input type="text" class="form--control" placeholder="Search policies, claims, or FAQs" />
-            </form>
         </div>
         <div class="user-info">
             <div class="user-info__right">
                 <div class="user-info__button">
                     <div class="user-info__thumb">
-                        <img class="fit-image"
-                            src="{{ getImage(getFilePath('userProfile') . '/' . auth()->user()->image) }}"
-                            alt="profile" />
+                        <img class="fit-image" src="{{ getImage(getFilePath('userProfile') . '/' . auth()->user()->image) }}" alt="profile" />
                     </div>
                     <div class="user-info__profile">
                         <p class="user-info__name">{{ auth()->user()->fullname }}</p>
@@ -36,14 +28,6 @@
                     </a>
                 </li>
 
-                <li class="user-info-dropdown__item">
-                    <a class="user-info-dropdown__link" href="#">
-                        <span class="icon">
-                            <i class="fa-brands fa-whatsapp"></i>
-                        </span>
-                        <span class="text"> @lang('Meta Setting') </span>
-                    </a>
-                </li>
                 <li class="user-info-dropdown__item">
                     <a class="user-info-dropdown__link" href="{{ route('user.twofactor') }}">
                         <span class="icon">

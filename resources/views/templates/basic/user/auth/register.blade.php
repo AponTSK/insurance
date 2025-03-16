@@ -33,23 +33,6 @@
                                         <input type="email" class="form-control form--control form-two checkUser" placeholder="Email address" id="email" name="email" value="{{ old('email') }}" required>
                                     </div>
 
-                                    <div class="col-sm-12 form-group">
-                                        <label class="form--label"> @lang('Phone Number') </label>
-                                        <div class="input-group">
-                                            <div class="input-group-text">
-                                                <select class="form-select form--control country-code">
-                                                    @foreach ($countries as $key => $country)
-                                                        <option data-mobile_code="{{ $country->dial_code }}" value="{{ $key }}">
-                                                            +{{ $country->dial_code }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <input type="hidden" name="mobile_code">
-                                            <input type="hidden" name="country_code">
-                                            <input type="text" class="form-control form--control phone-number" name="mobile" required>
-                                        </div>
-                                    </div>
                                     <div class="col-sm-6 form-group">
                                         <label for="your-password" class="form-label form--label">@lang('Password')</label>
                                         <div class="position-relative">

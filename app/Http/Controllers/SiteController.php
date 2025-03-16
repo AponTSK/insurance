@@ -217,7 +217,6 @@ class SiteController extends Controller
         $validatedData = $request->validate([
             'full_name'       => 'required|string',
             'mobile'          => 'required|string',
-            'member'          => 'nullable|string',
             'your_age'        => 'required|string',
             'spouse_age'      => 'nullable|string',
             'children_count'  => 'nullable|string',

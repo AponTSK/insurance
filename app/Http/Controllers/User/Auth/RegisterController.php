@@ -28,10 +28,7 @@ class RegisterController extends Controller
     {
         $pageTitle = "Register";
         Intended::identifyRoute();
-        $info       = json_decode(json_encode(getIpInfo()), true);
-        $mobileCode = @implode(',', $info['code']);
-        $countries  = json_decode(file_get_contents(resource_path('views/partials/country.json')));
-        return view('Template::user.auth.register', compact('pageTitle', 'mobileCode', 'countries'));
+        return view('Template::user.auth.register', compact('pageTitle'));
     }
 
     protected function validator(array $data)

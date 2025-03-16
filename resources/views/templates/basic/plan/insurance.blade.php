@@ -54,15 +54,7 @@
                                     <input type="number" value="{{ old('mobile') }}" class="form-control form--control checkUser" name="mobile" required>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
-                                <label class="form--label"> @lang('Members') </label>
-                                <select class="form-select form--control select2" name="member">
-                                    <option selected>Enter your name</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </select>
-                            </div>
+
                             <div class="col-lg-6">
                                 <label class="form--label">@lang('Your Age')</label>
                                 <select class="form-select form--control select2" name="your_age" required>

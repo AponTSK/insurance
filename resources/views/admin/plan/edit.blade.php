@@ -4,10 +4,9 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
-                <div class="card-body p-2">
-                    <form class="plan-form" method="POST" action="{{ route('admin.plan.save', $plan->id) }}" enctype="multipart/form-data">
+                <div class="card-body p-3">
+                    <form method="POST" action="{{ route('admin.plan.save', $plan->id) }}" enctype="multipart/form-data">
                         @csrf
-
                         <div class="row">
                             <div class="form-group">
                                 <label>@lang('Name')</label>
@@ -49,7 +48,7 @@
                             <div class="form-group col-md-6">
                                 <label>@lang('Price')</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" name="price" step="0.01" value="{{ old('price', $plan->price) }}" required />
+                                    <input type="number" class="form-control" name="price" step="0.01" value="{{ old('price', getAmount($plan->price)) }}" required />
                                     <span class="input-group-text">@lang('USD')</span>
                                 </div>
                             </div>
@@ -64,17 +63,18 @@
                             <div class="form-group col-md-6">
                                 <label>@lang('Coverage Amount')</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" name="coverage_amount" step="0.01" required />
+                                    <input type="number" class="form-control" name="coverage_amount" step="0.01" value="{{ old('coverage_amount', getAmount($plan->coverage_amount)) }}" required />
                                     <span class="input-group-text">@lang('USD')</span>
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
                                 <label>@lang('Validity')</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" name="validity" required />
+                                    <input type="number" class="form-control" name="validity" value="{{ old('validity', $plan->validity) }}" required />
                                     <span class="input-group-text">@lang('Months')</span>
                                 </div>
                             </div>
+
                             <div class="col-lg-12">
                                 <ul class="list-group">
                                     <li class="list-group-item d-flex flex-wrap flex-sm-nowrap gap-2 justify-content-between align-items-center">
@@ -83,7 +83,7 @@
                                         </div>
                                         <div class="col-lg-2">
                                             <input type="checkbox" data-width="100%" data-size="large" data-onstyle="-success" data-offstyle="-danger" data-bs-toggle="toggle" data-height="35" data-on="@lang('Enable')"
-                                                data-off="@lang('Disable')" class="spouseCoverage" name="spouse_coverage" value="1">
+                                                data-off="@lang('Disable')" class="spouseCoverage" name="spouse_coverage" value="1" {{ $plan->spouse_coverage ? 'checked' : '' }}>
                                         </div>
                                     </li>
 
@@ -93,7 +93,7 @@
                                         </div>
                                         <div class="col-lg-2">
                                             <input type="checkbox" data-width="100%" data-size="large" data-onstyle="-success" data-offstyle="-danger" data-bs-toggle="toggle" data-height="35" data-on="@lang('Enable')"
-                                                data-off="@lang('Disable')" class="childrenCoverage" name="children_coverage" value="1">
+                                                data-off="@lang('Disable')" class="childrenCoverage" name="children_coverage" value="1" {{ $plan->children_coverage ? 'checked' : '' }}>
                                         </div>
                                     </li>
 
@@ -102,19 +102,35 @@
                                             <label>@lang('No. of Children')</label>
                                         </div>
                                         <div class="col-lg-2">
-                                            <input type="number" class="form-control noChildren" name="no_children" min="0" id="noChildren" disabled>
+                                            <input type="number" class="form-control noChildren" name="no_children" min="0" value="{{ old('no_children', $plan->no_children) }}"
+                                                {{ $plan->children_coverage ? '' : 'disabled' }}>
                                         </div>
                                     </li>
                                 </ul>
                             </div>
+                        </div>
 
-                            <div class="modal-footer mt-3">
-                                <button type="submit" class="btn btn--primary w-100 h-45">@lang('Update')</button>
-                            </div>
+                        <div class="modal-footer mt-3">
+                            <button type="submit" class="btn btn--primary w-100 h-45">@lang('Update')</button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    </div>
 @endsection
+
+@push('script')
+    <script>
+        (function($) {
+            "use strict";
+
+            $('.plan-feature, .plan-notCover').select2();
+
+            $('.childrenCoverage').on('change', function() {
+                $('.noChildren').prop('disabled', !$(this).prop('checked')).val($(this).prop('checked') ? $('.noChildren').val() : 0);
+            });
+
+        })(jQuery);
+    </script>
+@endpush
